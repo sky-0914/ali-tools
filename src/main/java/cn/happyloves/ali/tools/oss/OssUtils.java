@@ -1,17 +1,23 @@
 package cn.happyloves.ali.tools.oss;
 
 import cn.happyloves.ali.tools.oss.properties.OssProperties;
+import com.aliyun.oss.HttpMethod;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author ZC
@@ -326,5 +332,56 @@ public class OssUtils {
             }
         }
 
+        public static void batchDownLoadOssFile(OSSClient ossClient, OssProperties ossProperties, List<String> fileNames, String zipFileName, HttpServletResponse response) {
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("multipart/form-data");
+            response.setHeader("Content-Disposition", "attachment;fileName=" + zipFileName + ".zip");
+            BufferedInputStream bis = null;
+            try {
+                ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
+                int sortNum = 0;
+                for (String fileName : fileNames) {
+                    Date expiration = new Date(System.currentTimeMillis() + 3600 * 1000);
+                    GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(ossProperties.getBucketName(), fileName, HttpMethod.GET);
+                    // 设置过期时间。
+                    request.setExpiration(expiration);
+                    // 生成签名URL（HTTP GET请求）。
+                    URL signedUrl = ossClient.generatePresignedUrl(request);
+                    // 使用签名URL发送请求。
+                    OSSObject ossObject = ossClient.getObject(signedUrl, new HashMap<>());
+
+                    if (ossObject != null) {
+                        InputStream inputStream = ossObject.getObjectContent();
+                        byte[] buffs = new byte[1024 * 10];
+
+                        String zipFile = sortNum + "_" + fileName.substring(fileName.lastIndexOf("/") + 1);
+                        ZipEntry zipEntry = new ZipEntry(zipFile);
+                        zos.putNextEntry(zipEntry);
+                        bis = new BufferedInputStream(inputStream, 1024 * 10);
+
+                        int read;
+                        while ((read = bis.read(buffs, 0, 1024 * 10)) != -1) {
+                            zos.write(buffs, 0, read);
+                        }
+                        ossObject.close();
+                    }
+                    sortNum++;
+                }
+                zos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                //关闭流
+                try {
+                    if (null != bis) {
+                        bis.close();
+                    }
+                    response.getOutputStream().flush();
+                    response.getOutputStream().close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
