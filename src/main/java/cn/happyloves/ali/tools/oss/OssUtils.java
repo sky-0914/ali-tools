@@ -314,6 +314,26 @@ public class OssUtils {
         }
 
         /**
+         * 覆盖上传
+         *
+         * @param ossClient     OSS客户端
+         * @param ossProperties OSS配置属性
+         * @param fileName      文件名称
+         * @param inputStream   文件输入流
+         * @return 返回值
+         * @throws Exception 异常
+         */
+        public static String overwritingUpload(OSSClient ossClient, OssProperties ossProperties, String fileName, InputStream inputStream) throws Exception {
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setObjectAcl(CannedAccessControlList.PublicReadWrite);
+            PutObjectResult putObjectResult = ossClient.putObject(ossProperties.getBucketName(), ossProperties.getHome().concat("/").concat(fileName), inputStream, metadata);
+            inputStream.close();
+            String url = generateUrl(ossProperties, fileName);
+            log.info("url:{}", url);
+            return url;
+        }
+
+        /**
          * 生成地址(如果cdn为空则返回oss域名)
          * oss:https://bucketNmae.oss-cn-beijing.aliyuncs.com/upload/xxx.xxx
          * cdn:https://xxx.xxx.com/upload/xxx.xxx

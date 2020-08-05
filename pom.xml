@@ -194,7 +194,6 @@
                             <charset>UTF-8</charset>
                             <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
-
                     </execution>
                 </executions>
             </plugin>
