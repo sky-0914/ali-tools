@@ -57,9 +57,21 @@ public class SmsUtils {
 
     @Data
     public static class SendSmsRequest {
+        /**
+         * 手机号码
+         */
         private String phoneNumber;
+        /**
+         * 签名
+         */
         private String signName;
+        /**
+         * 模板Code
+         */
         private String templateCode;
+        /**
+         * 模板参数，JSON格式
+         */
         private String templateParam;
     }
 }
