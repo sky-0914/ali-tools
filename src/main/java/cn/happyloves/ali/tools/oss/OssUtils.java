@@ -147,6 +147,27 @@ public class OssUtils {
         }
 
         /**
+         * listUrls 列举url（包含文件夹）
+         * 获取文件uel（包含文件夹）
+         *
+         * @param ossClient          OSS客户端
+         * @param ossProperties      OSS配置属性
+         * @param listObjectsRequest 请求参数
+         * @return url集合
+         */
+        public static List<String> listUrls(OSSClient ossClient, OssProperties ossProperties, ListObjectsRequest listObjectsRequest) {
+            // 递归列出fun目录下的所有文件。
+            // 列出文件。
+            ObjectListing listing = ossClient.listObjects(listObjectsRequest);
+            List<String> list = new ArrayList<>();
+            // 遍历所有文件。
+            for (OSSObjectSummary objectSummary : listing.getObjectSummaries()) {
+                list.add(ossProperties.getHTTPProtocol() + "://" + ossProperties.getBucketName() + "." + ossProperties.getEndpoint() + "/" + objectSummary.getKey());
+            }
+            return list;
+        }
+
+        /**
          * DeleteSpecifiedPrefixFile 删除指定前缀文件
          * 列举所有包含指定前缀的文件并删除
          *
