@@ -17,8 +17,8 @@ ali-tools目前支持阿里云OSS文件上传、删除文件、批量删除、�
 ```yaml
 ali-tools:
   oss:
-    accessKeyId: LTAI4FfzUhQoAnibbGhrJh6p
-    accessKeySecret: 4eMQtDoF9nq5XYqUbxftXAePha6IZG
+    accessKeyId: ${accessKeyId}
+    accessKeySecret: ${accessKeySecret}
     endpoint: oss-cn-shanghai.aliyuncs.com
     bucketName: hopefunbak
 #    HTTPProtocol: https #默认为http
