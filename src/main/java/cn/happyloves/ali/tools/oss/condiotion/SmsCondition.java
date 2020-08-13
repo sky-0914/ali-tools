@@ -16,11 +16,17 @@ public class SmsCondition implements Condition {
     @Override
     public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
         String accessKeyId = conditionContext.getEnvironment().getProperty("ali-tools.sms.accessKeyId");
+        if (StringUtils.isBlank(accessKeyId)) {
+            accessKeyId = conditionContext.getEnvironment().getProperty("ali-tools.sms.access-key-id");
+        }
         String accessKeySecret = conditionContext.getEnvironment().getProperty("ali-tools.sms.accessKeySecret");
-        if (StringUtils.isEmpty(accessKeyId)) {
-            throw new RuntimeException("Lack of ali-tools.sms configuration:ali-tools.sms.accessKeyId");
-        } else if (StringUtils.isEmpty(accessKeySecret)) {
-            throw new RuntimeException("Lack of ali-tools.sms configuration:ali-tools.sms.accessKeySecret");
+        if (StringUtils.isBlank(accessKeySecret)) {
+            accessKeySecret = conditionContext.getEnvironment().getProperty("ali-tools.sms.access-key-secret");
+        }
+        if (StringUtils.isBlank(accessKeyId)) {
+            throw new RuntimeException("Lack of ali-tools.sms configuration: ali-tools.sms.accessKeyId OR ali-tools.sms.access-key-id");
+        } else if (StringUtils.isBlank(accessKeySecret)) {
+            throw new RuntimeException("Lack of ali-tools.sms configuration: ali-tools.sms.accessKeySecret OR ali-tools.sms.access-key-secret");
         } else {
             return true;
         }
