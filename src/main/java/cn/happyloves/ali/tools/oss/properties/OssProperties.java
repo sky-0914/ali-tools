@@ -40,9 +40,9 @@ public class OssProperties {
      */
     private String home = "upload";
     /**
-     * http协议（默认http）
+     * http协议（默认https）
      */
-    private String HTTPProtocol = "http";
+    private String HTTPProtocol = "https";
     /**
      * cdn
      */
