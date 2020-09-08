@@ -1,7 +1,7 @@
 # ali-tools
-ali-tools目前支持阿里云OSS文件上传、删除文件、批量删除、查看文件列表
-
-后续支持SMS服务，敬请期待。。。
+ali-tools目前支持
+>OSS文件存储，文件上传、删除文件、批量删除、查看文件列表<br/>
+>SMS短信服务
 
 使用教程：
 
@@ -27,10 +27,14 @@ ali-tools:
 #oss (https://bucketNmae.oss-cn-beijing.aliyuncs.com/upload/xxx.xxx)
 #cdn (https://xxx.xxx.com/upload/xxx.xxx)
 #    cdn: 不传则为oss域名，反之为cdn
+  sms:
+    accessKeyId: ${ali-tools.oss.accessKeyId}
+    accessKeySecret: ${ali-tools.oss.accessKeySecret}
 ```
 第三步：添加注解
 ```java
-@EnableAliToolsOss
+@EnableAliToolsOss//启用OSS
+@EnableAliToolsSms//启用SMS
 @SpringBootApplication
 public class DemoApplication {
     public static void main(String[] args) {
@@ -49,13 +53,29 @@ class DemoApplicationTests {
     private OssProperties ossProperties;
 
     @Test
-    void contextLoads() throws Exception {
+    void oss() {
         File file = new File("C:\\Users\\ZC\\OneDrive\\圖片\\001.jpg");
         FileInputStream fileInputStream = new FileInputStream(file);
 
         String upload = OssUtils.OssUpload.upload(ossClient, ossProperties, "test2.png", fileInputStream);
         System.out.printf(upload);
     }
+
+    @Autowired
+    private IAcsClient smsClient;
+    @Autowired
+    private SmsProperties smsProperties;
+
+    @Test
+    void sms() {
+       SmsUtils.SendSmsRequest par = new SmsUtils.SendSmsRequest();
+       par.setPhoneNumber("手机号");
+       par.setSignName("签名");
+       par.setTemplateCode("模板CODE");
+       par.setTemplateParam("{'name':'模板字符串JSON格式'}");
+       SmsUtils.sendSms(smsClient, smsProperties, par);
+    }
+
 
 }
 ```
