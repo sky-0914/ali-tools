@@ -20,7 +20,7 @@ ali-tools:
     accessKeyId: ${accessKeyId}
     accessKeySecret: ${accessKeySecret}
     endpoint: oss-cn-shanghai.aliyuncs.com
-    bucketName: hopefunbak
+    bucketName: happyloves
 #    HTTPProtocol: https #默认为http
 #    home: 默认为:upload
 # 示例：
@@ -30,6 +30,8 @@ ali-tools:
   sms:
     accessKeyId: ${ali-tools.oss.accessKeyId}
     accessKeySecret: ${ali-tools.oss.accessKeySecret}
+    singleName:
+    templateCode:
 ```
 第三步：添加注解
 ```java
