@@ -55,6 +55,15 @@ public class SmsUtils {
         return false;
     }
 
+    /**
+     * TODO 调用SendBatchSms接口批量发送短信。
+     *
+     * @return
+     */
+    public static boolean sendBatchSms() {
+        return false;
+    }
+
     @Data
     public static class SendSmsRequest {
         /**
