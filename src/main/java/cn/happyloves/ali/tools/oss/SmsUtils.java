@@ -60,7 +60,27 @@ public class SmsUtils {
      *
      * @return
      */
-    public static boolean sendBatchSms() {
+    public static boolean sendBatchSms(IAcsClient smsClient, SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
+        CommonRequest request = new CommonRequest();
+        request.setSysMethod(MethodType.POST);
+        request.setSysDomain("dysmsapi.aliyuncs.com");
+        request.setSysVersion("2017-05-25");
+        request.setSysAction("SendBatchSms");
+        request.putQueryParameter("RegionId", smsProperties.getRegionId());
+
+        //说明 验证码类型短信，建议使用接口SendSms单独发送。
+        request.putQueryParameter("PhoneNumberJson", "");
+        //说明 如果JSON中需要带换行符，请参照标准的JSON协议处理；且模板变量值的个数必须与手机号码、签名的个数相同、内容一一对应，表示向指定手机号码中发对应签名的短信，且短信模板中的变量参数替换为对应的值。
+        request.putQueryParameter("SignNameJson", "");
+        //说明 如果JSON中需要带换行符，请参照标准的JSON协议处理；且模板变量值的个数必须与手机号码、签名的个数相同、内容一一对应，表示向指定手机号码中发对应签名的短信，且短信模板中的变量参数替换为对应的值。
+        request.putQueryParameter("TemplateParamJson", "");
+
+
+        String signName = StringUtils.isNotBlank(sendSmsRequest.getSignName()) ? sendSmsRequest.getSignName() : smsProperties.getSingleName();
+        String templateCode = StringUtils.isNotBlank(sendSmsRequest.getTemplateCode()) ? sendSmsRequest.getTemplateCode() : smsProperties.getTemplateCode();
+        request.putQueryParameter("SignName", signName);
+        request.putQueryParameter("TemplateCode", templateCode);
+
         return false;
     }
 
