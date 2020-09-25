@@ -81,6 +81,14 @@ public class SmsUtils {
         request.putQueryParameter("SignName", signName);
         request.putQueryParameter("TemplateCode", templateCode);
 
+        try {
+            CommonResponse response = smsClient.getCommonResponse(request);
+            log.debug("Ali SMS Response Data: [{}]", response.getData());
+            JsonObject asJsonObject = JsonParser.parseString(response.getData()).getAsJsonObject();
+            return CODE.equals(asJsonObject.get("Code").toString());
+        } catch (ClientException e) {
+            log.error("ClientException ErrCode:[{}], ErrMsg:[{}]", e.getErrCode(), e.getErrMsg());
+        }
         return false;
     }
 
