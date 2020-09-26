@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 @Slf4j
 public class SmsUtils {
     private static final String CODE = "OK";
+    private static final String SYS_DOMAIN = "dysmsapi.aliyuncs.com";
 
     /**
      * 发送短信
@@ -32,7 +33,7 @@ public class SmsUtils {
     public static boolean sendSms(IAcsClient smsClient, SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
-        request.setSysDomain("dysmsapi.aliyuncs.com");
+        request.setSysDomain(SYS_DOMAIN);
         request.setSysVersion("2017-05-25");
         request.setSysAction("SendSms");
         request.putQueryParameter("RegionId", smsProperties.getRegionId());
@@ -58,12 +59,12 @@ public class SmsUtils {
     /**
      * TODO 调用SendBatchSms接口批量发送短信。
      *
-     * @return
+     * @return 是否发送成功
      */
     public static boolean sendBatchSms(IAcsClient smsClient, SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
-        request.setSysDomain("dysmsapi.aliyuncs.com");
+        request.setSysDomain(SYS_DOMAIN);
         request.setSysVersion("2017-05-25");
         request.setSysAction("SendBatchSms");
         request.putQueryParameter("RegionId", smsProperties.getRegionId());
