@@ -21,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 public class SmsUtils {
     private static final String CODE = "OK";
     private static final String SYS_DOMAIN = "dysmsapi.aliyuncs.com";
+    private static final String SYS_VERSION = "2017-05-25";
 
     /**
      * 发送短信
@@ -34,7 +35,7 @@ public class SmsUtils {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);
-        request.setSysVersion("2017-05-25");
+        request.setSysVersion(SYS_VERSION);
         request.setSysAction("SendSms");
         request.putQueryParameter("RegionId", smsProperties.getRegionId());
         request.putQueryParameter("PhoneNumbers", sendSmsRequest.getPhoneNumber());
@@ -65,7 +66,7 @@ public class SmsUtils {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);
-        request.setSysVersion("2017-05-25");
+        request.setSysVersion(SYS_VERSION);
         request.setSysAction("SendBatchSms");
         request.putQueryParameter("RegionId", smsProperties.getRegionId());
 
