@@ -23,6 +23,11 @@ public class SmsUtils {
     private static final String SYS_DOMAIN = "dysmsapi.aliyuncs.com";
     private static final String SYS_VERSION = "2017-05-25";
 
+    enum SysAction{
+        SendSms,
+        SendBatchSms
+    }
+
     /**
      * 发送短信
      *
@@ -36,7 +41,7 @@ public class SmsUtils {
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);
         request.setSysVersion(SYS_VERSION);
-        request.setSysAction("SendSms");
+        request.setSysAction(SysAction.SendSms.name());
         request.putQueryParameter("RegionId", smsProperties.getRegionId());
         request.putQueryParameter("PhoneNumbers", sendSmsRequest.getPhoneNumber());
         request.putQueryParameter("TemplateParam", sendSmsRequest.getTemplateParam());
@@ -67,7 +72,7 @@ public class SmsUtils {
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);
         request.setSysVersion(SYS_VERSION);
-        request.setSysAction("SendBatchSms");
+        request.setSysAction(SysAction.SendBatchSms.name());
         request.putQueryParameter("RegionId", smsProperties.getRegionId());
 
         //说明 验证码类型短信，建议使用接口SendSms单独发送。
