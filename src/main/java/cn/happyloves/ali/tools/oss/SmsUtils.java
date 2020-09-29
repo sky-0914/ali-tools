@@ -23,7 +23,7 @@ public class SmsUtils {
     private static final String SYS_DOMAIN = "dysmsapi.aliyuncs.com";
     private static final String SYS_VERSION = "2017-05-25";
 
-    enum SysAction{
+    enum SysAction {
         SendSms,
         SendBatchSms
     }
@@ -65,6 +65,9 @@ public class SmsUtils {
     /**
      * TODO 调用SendBatchSms接口批量发送短信。
      *
+     * @param smsClient      客户端
+     * @param smsProperties  SMS配置属性
+     * @param sendSmsRequest 请求参数
      * @return 是否发送成功
      */
     public static boolean sendBatchSms(IAcsClient smsClient, SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
