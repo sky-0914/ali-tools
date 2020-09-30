@@ -24,7 +24,13 @@ public class SmsUtils {
     private static final String SYS_VERSION = "2017-05-25";
 
     enum SysAction {
+        /**
+         * 发送短信
+         */
         SendSms,
+        /**
+         * 批量发送短信
+         */
         SendBatchSms
     }
 
