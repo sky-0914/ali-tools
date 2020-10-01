@@ -91,7 +91,6 @@ public class SmsUtils {
         //说明 如果JSON中需要带换行符，请参照标准的JSON协议处理；且模板变量值的个数必须与手机号码、签名的个数相同、内容一一对应，表示向指定手机号码中发对应签名的短信，且短信模板中的变量参数替换为对应的值。
         request.putQueryParameter("TemplateParamJson", "");
 
-
         String signName = StringUtils.isNotBlank(sendSmsRequest.getSignName()) ? sendSmsRequest.getSignName() : smsProperties.getSingleName();
         String templateCode = StringUtils.isNotBlank(sendSmsRequest.getTemplateCode()) ? sendSmsRequest.getTemplateCode() : smsProperties.getTemplateCode();
         request.putQueryParameter("SignName", signName);
