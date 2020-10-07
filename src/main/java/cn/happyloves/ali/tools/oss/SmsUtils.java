@@ -22,6 +22,7 @@ public class SmsUtils {
     private static final String CODE = "OK";
     private static final String SYS_DOMAIN = "dysmsapi.aliyuncs.com";
     private static final String SYS_VERSION = "2017-05-25";
+    private static final String REGION_ID = "RegionId";
 
     enum SysAction {
         /**
@@ -48,7 +49,7 @@ public class SmsUtils {
         request.setSysDomain(SYS_DOMAIN);
         request.setSysVersion(SYS_VERSION);
         request.setSysAction(SysAction.SendSms.name());
-        request.putQueryParameter("RegionId", smsProperties.getRegionId());
+        request.putQueryParameter(REGION_ID, smsProperties.getRegionId());
         request.putQueryParameter("PhoneNumbers", sendSmsRequest.getPhoneNumber());
         request.putQueryParameter("TemplateParam", sendSmsRequest.getTemplateParam());
         String signName = StringUtils.isNotBlank(sendSmsRequest.getSignName()) ? sendSmsRequest.getSignName() : smsProperties.getSingleName();
@@ -82,7 +83,7 @@ public class SmsUtils {
         request.setSysDomain(SYS_DOMAIN);
         request.setSysVersion(SYS_VERSION);
         request.setSysAction(SysAction.SendBatchSms.name());
-        request.putQueryParameter("RegionId", smsProperties.getRegionId());
+        request.putQueryParameter(REGION_ID, smsProperties.getRegionId());
 
         //说明 验证码类型短信，建议使用接口SendSms单独发送。
         request.putQueryParameter("PhoneNumberJson", "");
