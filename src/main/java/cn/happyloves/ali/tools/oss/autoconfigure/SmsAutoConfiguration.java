@@ -24,8 +24,12 @@ import org.springframework.context.annotation.Configuration;
 @Conditional(SmsCondition.class)
 @ConditionalOnProperty(prefix = "ali-tools.sms", value = "true", matchIfMissing = true)
 public class SmsAutoConfiguration {
+    private final SmsProperties smsProperties;
+
     @Autowired
-    private SmsProperties smsProperties;
+    public SmsAutoConfiguration(SmsProperties smsProperties) {
+        this.smsProperties = smsProperties;
+    }
 
     /**
      * create IAcsClient client

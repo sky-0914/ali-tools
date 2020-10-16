@@ -24,8 +24,12 @@ import org.springframework.context.annotation.Configuration;
 @Conditional(OssCondition.class)
 @ConditionalOnProperty(prefix = "ali-tools.oss", value = "true", matchIfMissing = true)
 public class OssAutoConfiguration {
+    private final OssProperties ossProperties;
+
     @Autowired
-    private OssProperties ossProperties;
+    public OssAutoConfiguration(OssProperties ossProperties) {
+        this.ossProperties = ossProperties;
+    }
 
     /**
      * create OSS client
