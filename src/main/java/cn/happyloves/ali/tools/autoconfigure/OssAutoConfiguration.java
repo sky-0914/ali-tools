@@ -1,7 +1,7 @@
-package cn.happyloves.ali.tools.oss.autoconfigure;
+package cn.happyloves.ali.tools.autoconfigure;
 
-import cn.happyloves.ali.tools.oss.condiotion.OssCondition;
-import cn.happyloves.ali.tools.oss.properties.OssProperties;
+import cn.happyloves.ali.tools.condiotion.OssCondition;
+import cn.happyloves.ali.tools.properties.OssProperties;
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;

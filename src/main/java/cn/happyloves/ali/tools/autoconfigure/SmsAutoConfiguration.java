@@ -1,7 +1,7 @@
-package cn.happyloves.ali.tools.oss.autoconfigure;
+package cn.happyloves.ali.tools.autoconfigure;
 
-import cn.happyloves.ali.tools.oss.condiotion.SmsCondition;
-import cn.happyloves.ali.tools.oss.properties.SmsProperties;
+import cn.happyloves.ali.tools.condiotion.SmsCondition;
+import cn.happyloves.ali.tools.properties.SmsProperties;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.profile.DefaultProfile;

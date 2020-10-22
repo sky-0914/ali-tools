@@ -1,7 +1,7 @@
-package cn.happyloves.ali.tools.oss.annotation;
+package cn.happyloves.ali.tools.annotation;
 
-import cn.happyloves.ali.tools.oss.autoconfigure.SmsAutoConfiguration;
-import cn.happyloves.ali.tools.oss.condiotion.SmsCondition;
+import cn.happyloves.ali.tools.condiotion.SmsCondition;
+import cn.happyloves.ali.tools.autoconfigure.SmsAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

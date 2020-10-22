@@ -1,6 +1,6 @@
-package cn.happyloves.ali.tools.oss;
+package cn.happyloves.ali.tools;
 
-import cn.happyloves.ali.tools.oss.properties.OssProperties;
+import cn.happyloves.ali.tools.properties.OssProperties;
 import com.aliyun.oss.HttpMethod;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;

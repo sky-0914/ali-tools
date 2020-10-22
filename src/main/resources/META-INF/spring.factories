@@ -1,2 +1,2 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.happyloves.ali.tools.oss.autoconfigure.OssAutoConfiguration\
-  ,cn.happyloves.ali.tools.oss.autoconfigure.SmsAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.happyloves.ali.tools.autoconfigure.OssAutoConfiguration\
+  ,cn.happyloves.ali.tools.autoconfigure.SmsAutoConfiguration

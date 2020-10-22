@@ -1,4 +1,4 @@
-package cn.happyloves.ali.tools.oss.properties;
+package cn.happyloves.ali.tools.properties;
 
 import com.aliyun.oss.ClientConfiguration;
 import lombok.Data;

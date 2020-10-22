@@ -1,7 +1,7 @@
-package cn.happyloves.ali.tools.oss.annotation;
+package cn.happyloves.ali.tools.annotation;
 
-import cn.happyloves.ali.tools.oss.autoconfigure.OssAutoConfiguration;
-import cn.happyloves.ali.tools.oss.condiotion.OssCondition;
+import cn.happyloves.ali.tools.autoconfigure.OssAutoConfiguration;
+import cn.happyloves.ali.tools.condiotion.OssCondition;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

@@ -1,6 +1,6 @@
-package cn.happyloves.ali.tools.oss;
+package cn.happyloves.ali.tools;
 
-import cn.happyloves.ali.tools.oss.properties.SmsProperties;
+import cn.happyloves.ali.tools.properties.SmsProperties;
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.IAcsClient;

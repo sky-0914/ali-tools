@@ -1,4 +1,4 @@
-package cn.happyloves.ali.tools.oss.condiotion;
+package cn.happyloves.ali.tools.condiotion;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Condition;
