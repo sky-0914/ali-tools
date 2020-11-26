@@ -1,6 +1,7 @@
 package cn.happyloves.ali.tools.properties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -13,19 +14,10 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "ali-tools.sms")
 @Data
-public class SmsProperties {
+@EqualsAndHashCode(callSuper = false)
+public class SmsProperties extends BaseProperties {
 
     private String regionId = "cn-hangzhou";
-    /**
-     * accessKeyId
-     */
-    private String accessKeyId;
-
-    /**
-     * accessKeySecret
-     */
-    private String accessKeySecret;
-
     /**
      * 短信签名名称。请在控制台签名管理页面签名名称一列查看。必须是已添加、并通过审核的短信签名。
      */

@@ -2,6 +2,7 @@ package cn.happyloves.ali.tools.properties;
 
 import com.aliyun.oss.ClientConfiguration;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -14,23 +15,13 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "ali-tools.oss")
 @Data
-public class OssProperties {
+@EqualsAndHashCode(callSuper = false)
+public class OssProperties extends BaseProperties{
 
     /**
      * endpoint
      */
     private String endpoint;
-
-    /**
-     * accessKeyId
-     */
-    private String accessKeyId;
-
-    /**
-     * accessKeySecret
-     */
-    private String accessKeySecret;
-
     /**
      * bucketName
      */
