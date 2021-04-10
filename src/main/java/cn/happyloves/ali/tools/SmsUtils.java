@@ -96,7 +96,6 @@ public class SmsUtils {
         String templateCode = StringUtils.isNotBlank(sendSmsRequest.getTemplateCode()) ? sendSmsRequest.getTemplateCode() : smsProperties.getTemplateCode();
         request.putQueryParameter("SignName", signName);
         request.putQueryParameter("TemplateCode", templateCode);
-
         try {
             CommonResponse response = smsClient.getCommonResponse(request);
             log.debug("Ali SMS Response Data: [{}]", response.getData());
