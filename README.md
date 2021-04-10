@@ -78,7 +78,6 @@ class DemoApplicationTests {
        SmsUtils.sendSms(smsClient, smsProperties, par);
     }
 
-
 }
 ```
 [开发工具使用JetBrains的IDEA](https://www.jetbrains.com/?from=ali-tool)
