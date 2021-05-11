@@ -33,7 +33,7 @@ public class OssProperties extends BaseProperties{
     /**
      * http协议（默认https）
      */
-    private String HTTPProtocol = "https";
+    private String httpProtocol = "https";
     /**
      * cdn
      */

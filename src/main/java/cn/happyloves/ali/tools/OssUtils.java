@@ -24,7 +24,7 @@ import java.util.zip.ZipOutputStream;
  * @date 2020/6/8-22:05
  */
 @Slf4j
-public class OssUtils {
+public final class OssUtils {
     /**
      * 操作OSS存储空间
      */
@@ -162,7 +162,7 @@ public class OssUtils {
             List<String> list = new ArrayList<>();
             // 遍历所有文件。
             for (OSSObjectSummary objectSummary : listing.getObjectSummaries()) {
-                list.add(ossProperties.getHTTPProtocol() + "://" + ossProperties.getBucketName() + "." + ossProperties.getEndpoint() + "/" + objectSummary.getKey());
+                list.add(ossProperties.getHttpProtocol() + "://" + ossProperties.getBucketName() + "." + ossProperties.getEndpoint() + "/" + objectSummary.getKey());
             }
             return list;
         }
@@ -367,9 +367,9 @@ public class OssUtils {
             String cdn = ossProperties.getCdn();
             String home = ossProperties.getHome();
             if (StringUtils.isNotBlank(cdn)) {
-                return String.format("%s://%s/%s/%s", ossProperties.getHTTPProtocol(), cdn, home, fileName);
+                return String.format("%s://%s/%s/%s", ossProperties.getHttpProtocol(), cdn, home, fileName);
             } else {
-                return String.format("%s://%s.%s/%s/%s", ossProperties.getHTTPProtocol(), ossProperties.getBucketName(), ossProperties.getEndpoint(), home, fileName);
+                return String.format("%s://%s.%s/%s/%s", ossProperties.getHttpProtocol(), ossProperties.getBucketName(), ossProperties.getEndpoint(), home, fileName);
             }
         }
 
