@@ -1,7 +1,8 @@
 # ali-tools
 ali-tools目前支持
->OSS文件存储，文件上传、删除文件、批量删除、查看文件列表<br/>
->SMS短信服务
+> OSS文件存储，文件上传、删除文件、批量删除、查看文件列表<br/>
+> SMS短信服务<br/>
+> OCR识别身份证
 
 使用教程：
 
@@ -78,6 +79,10 @@ class DemoApplicationTests {
        SmsUtils.sendSms(smsClient, smsProperties, par);
     }
 
+    @Test
+    void idCard() {
+        System.out.println(OcrUtils.idCard("图片url", "appcode", true));
+    }
 }
 ```
 ![90ccdc6c1f63efa2a9e3c61cf8b738c1.jpeg](https://i.loli.net/2021/05/21/zO9cqhG31NAfsKx.jpg)

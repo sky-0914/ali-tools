@@ -15,11 +15,9 @@ import java.util.Map;
 @Slf4j
 public final class OcrUtils {
 
-    public static void main(String[] args) {
-        System.out.println(idCard("xxxx", "xxxx", false));
-    }
-
     /**
+     * 身份证
+     *
      * @param img     图片二进制数据的base64编码/图片url
      * @param appcode 应用Code
      * @param isFront 是否是正面
