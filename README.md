@@ -55,6 +55,7 @@ class DemoApplicationTests {
     @Autowired
     private OssProperties ossProperties;
 
+    // ============ OSS ============
     @Test
     void oss() {
         File file = new File("C:\\Users\\ZC\\OneDrive\\圖片\\001.jpg");
@@ -64,6 +65,7 @@ class DemoApplicationTests {
         System.out.printf(upload);
     }
 
+    // ============ SMS ============
     @Autowired
     private IAcsClient smsClient;
     @Autowired
@@ -79,6 +81,7 @@ class DemoApplicationTests {
        SmsUtils.sendSms(smsClient, smsProperties, par);
     }
 
+    // ============ ID CARD ============
     @Test
     void idCard() {
         System.out.println(OcrUtils.idCard("图片url", "appcode", true));
