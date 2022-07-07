@@ -56,13 +56,22 @@ public final class OcrUtils {
         return body;
     }
 
-    static class Sample {
+    /**
+     * 识别工具
+     */
+    static class Recognize {
 
-        private static void recognizeIdCard(Client ocrClient, RecognizeIdcardRequest recognizeIdcardRequest) {
+        /**
+         * 识别身份证
+         *
+         * @param ocrClient Client:OCR客户端
+         * @param request   RecognizeIdcardRequest:参数
+         */
+        static void recognizeIdCard(Client ocrClient, RecognizeIdcardRequest request) {
             RuntimeOptions runtime = new RuntimeOptions();
             try {
                 // 复制代码运行请自行打印 API 的返回值
-                ocrClient.recognizeIdcardWithOptions(recognizeIdcardRequest, runtime);
+                ocrClient.recognizeIdcardWithOptions(request, runtime);
             } catch (TeaException error) {
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
@@ -71,16 +80,6 @@ public final class OcrUtils {
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
             }
-        }
-
-        static void recognizeIdCard(Client ocrClient, boolean outputFigure) {
-            RecognizeIdcardRequest recognizeIdcardRequest = new RecognizeIdcardRequest().setOutputFigure(outputFigure);
-            recognizeIdCard(ocrClient, recognizeIdcardRequest);
-        }
-
-        static void recognizeIdCard(Client ocrClient) {
-            RecognizeIdcardRequest recognizeIdcardRequest = new RecognizeIdcardRequest();
-            recognizeIdCard(ocrClient, recognizeIdcardRequest);
         }
     }
 }
