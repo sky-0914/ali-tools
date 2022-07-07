@@ -3,6 +3,10 @@ package cn.happyloves.ali.tools;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.aliyun.ocr_api20210707.Client;
+import com.aliyun.ocr_api20210707.models.RecognizeIdcardRequest;
+import com.aliyun.tea.TeaException;
+import com.aliyun.teautil.models.RuntimeOptions;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -50,5 +54,33 @@ public final class OcrUtils {
             log.error(body);
         }
         return body;
+    }
+
+    static class Sample {
+
+        private static void recognizeIdCard(Client ocrClient, RecognizeIdcardRequest recognizeIdcardRequest) {
+            RuntimeOptions runtime = new RuntimeOptions();
+            try {
+                // 复制代码运行请自行打印 API 的返回值
+                ocrClient.recognizeIdcardWithOptions(recognizeIdcardRequest, runtime);
+            } catch (TeaException error) {
+                // 如有需要，请打印 error
+                com.aliyun.teautil.Common.assertAsString(error.message);
+            } catch (Exception _error) {
+                TeaException error = new TeaException(_error.getMessage(), _error);
+                // 如有需要，请打印 error
+                com.aliyun.teautil.Common.assertAsString(error.message);
+            }
+        }
+
+        static void recognizeIdCard(Client ocrClient, boolean outputFigure) {
+            RecognizeIdcardRequest recognizeIdcardRequest = new RecognizeIdcardRequest().setOutputFigure(outputFigure);
+            recognizeIdCard(ocrClient, recognizeIdcardRequest);
+        }
+
+        static void recognizeIdCard(Client ocrClient) {
+            RecognizeIdcardRequest recognizeIdcardRequest = new RecognizeIdcardRequest();
+            recognizeIdCard(ocrClient, recognizeIdcardRequest);
+        }
     }
 }
