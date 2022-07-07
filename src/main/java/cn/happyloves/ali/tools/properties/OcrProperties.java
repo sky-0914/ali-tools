@@ -14,5 +14,8 @@ import org.springframework.stereotype.Component;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class OcrProperties extends BaseProperties {
-    private String endpoint;
+    /**
+     * 访问的域名
+     */
+    private String endpoint = "ocr-api.cn-hangzhou.aliyuncs.com";
 }
