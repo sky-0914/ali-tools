@@ -1,5 +1,6 @@
 package cn.happyloves.ali.tools.condiotion;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
@@ -12,9 +13,11 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  * @author ZC
  * @date 2020/6/8-22:05
  */
+@Slf4j
 public class OssCondition implements Condition {
     @Override
     public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
+        log.info("执行 OssCondition...");
         String endpoint = conditionContext.getEnvironment().getProperty("ali-tools.oss.endpoint");
         String accessKeyId = conditionContext.getEnvironment().getProperty("ali-tools.oss.accessKeyId");
         if (StringUtils.isBlank(accessKeyId)) {

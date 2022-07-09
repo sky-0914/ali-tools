@@ -5,6 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.aliyun.ocr_api20210707.Client;
 import com.aliyun.ocr_api20210707.models.RecognizeIdcardRequest;
+import com.aliyun.ocr_api20210707.models.RecognizeIdcardResponse;
 import com.aliyun.tea.TeaException;
 import com.aliyun.teautil.models.RuntimeOptions;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +60,7 @@ public final class OcrUtils {
     /**
      * 识别工具
      */
-    static class Recognize {
+    public static class Recognize {
 
         /**
          * 识别身份证
@@ -67,16 +68,19 @@ public final class OcrUtils {
          * @param ocrClient Client:OCR客户端
          * @param request   RecognizeIdcardRequest:参数
          */
-        static void recognizeIdCard(Client ocrClient, RecognizeIdcardRequest request) {
+        public static void recognizeIdCard(Client ocrClient, RecognizeIdcardRequest request) {
             RuntimeOptions runtime = new RuntimeOptions();
             try {
                 // 复制代码运行请自行打印 API 的返回值
-                ocrClient.recognizeIdcardWithOptions(request, runtime);
+                final RecognizeIdcardResponse response = ocrClient.recognizeIdcardWithOptions(request, runtime);
+                log.info(JSONUtil.toJsonStr(response));
             } catch (TeaException error) {
+                log.error(error.message);
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
             } catch (Exception _error) {
                 TeaException error = new TeaException(_error.getMessage(), _error);
+                log.error(error.message);
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
             }

@@ -17,7 +17,10 @@ import org.springframework.stereotype.Component;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class OssProperties extends BaseProperties{
-
+    /**
+     * 是否启动
+     */
+    private boolean enable = false;
     /**
      * endpoint
      */

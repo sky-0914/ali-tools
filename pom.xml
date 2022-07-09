@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.happyloves</groupId>
     <artifactId>ali-tools</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <packaging>jar</packaging>
     <name>ali-tools</name>
     <url>https://github.com/452425952/ali-tools</url>

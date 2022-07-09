@@ -5,6 +5,7 @@ import cn.happyloves.ali.tools.properties.OssProperties;
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,10 +20,11 @@ import org.springframework.context.annotation.Configuration;
  * @author ZC
  * @date 2020/6/8-22:05
  */
+@Slf4j
 @Configuration
 @EnableConfigurationProperties(OssProperties.class)
 @Conditional(OssCondition.class)
-@ConditionalOnProperty(prefix = "ali-tools.oss", value = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "ali-tools.oss", name = "enable", havingValue = "true")
 public class OssAutoConfiguration {
     private final OssProperties ossProperties;
 
@@ -36,6 +38,7 @@ public class OssAutoConfiguration {
      */
     @Bean
     public OSSClient ossClient() {
+        log.info("初始化 OSS Client...");
         ClientConfiguration config = ossProperties.getClientConfig();
         String endpoint = ossProperties.getEndpoint();
         String accessKeyId = ossProperties.getAccessKeyId();

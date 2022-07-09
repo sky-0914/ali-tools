@@ -1,5 +1,6 @@
 package cn.happyloves.ali.tools.condiotion;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
@@ -9,9 +10,11 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  * @author zc
  * @date 2022/7/7 21:14
  */
+@Slf4j
 public class OcrCondition implements Condition {
     @Override
     public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
+        log.info("执行 OcrCondition...");
         String accessKeyId = conditionContext.getEnvironment().getProperty("ali-tools.ocr.accessKeyId");
         if (StringUtils.isBlank(accessKeyId)) {
             accessKeyId = conditionContext.getEnvironment().getProperty("ali-tools.ocr.access-key-id");

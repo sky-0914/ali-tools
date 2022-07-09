@@ -5,6 +5,7 @@ import cn.happyloves.ali.tools.properties.SmsProperties;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.profile.DefaultProfile;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,10 +20,11 @@ import org.springframework.context.annotation.Configuration;
  * @author ZC
  * @date 2020/6/8-22:05
  */
+@Slf4j
 @Configuration
 @EnableConfigurationProperties(SmsProperties.class)
 @Conditional(SmsCondition.class)
-@ConditionalOnProperty(prefix = "ali-tools.sms", value = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "ali-tools.sms", name = "enable", havingValue = "true")
 public class SmsAutoConfiguration {
     private final SmsProperties smsProperties;
 
@@ -36,6 +38,7 @@ public class SmsAutoConfiguration {
      */
     @Bean
     public IAcsClient smsClient() {
+        log.info("初始化 SMS Client...");
         DefaultProfile profile = DefaultProfile.getProfile(smsProperties.getRegionId(), smsProperties.getAccessKeyId(), smsProperties.getAccessKeySecret());
         return new DefaultAcsClient(profile);
     }

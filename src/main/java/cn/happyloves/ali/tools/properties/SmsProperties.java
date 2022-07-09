@@ -16,6 +16,10 @@ import org.springframework.stereotype.Component;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class SmsProperties extends BaseProperties {
+    /**
+     * 是否启动
+     */
+    private boolean enable = false;
 
     private String regionId = "cn-hangzhou";
     /**
