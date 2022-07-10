@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(OcrProperties.class)
 @Conditional(OcrCondition.class)
-@ConditionalOnProperty(prefix = "ali-tools.ocr", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ali-tools.ocr", name = {"enabled"}, matchIfMissing = true)
 public class OcrAutoConfiguration {
 
     private OcrProperties ocrProperties;

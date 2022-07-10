@@ -16,11 +16,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "ali-tools.oss")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class OssProperties extends BaseProperties{
-    /**
-     * 是否启动
-     */
-    private boolean enable = false;
+public class OssProperties extends BaseProperties {
     /**
      * endpoint
      */

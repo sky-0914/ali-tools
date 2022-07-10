@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(OssProperties.class)
 @Conditional(OssCondition.class)
-@ConditionalOnProperty(prefix = "ali-tools.oss", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ali-tools.oss", name = {"enabled"}, matchIfMissing = true)
 public class OssAutoConfiguration {
     private final OssProperties ossProperties;
 

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties(SmsProperties.class)
 @Conditional(SmsCondition.class)
-@ConditionalOnProperty(prefix = "ali-tools.sms", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "ali-tools.sms", name = {"enabled"}, matchIfMissing = true)
 public class SmsAutoConfiguration {
     private final SmsProperties smsProperties;
 

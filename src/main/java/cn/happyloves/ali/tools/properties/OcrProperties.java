@@ -14,11 +14,6 @@ import org.springframework.stereotype.Component;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class OcrProperties extends BaseProperties {
-
-    /**
-     * 是否启动
-     */
-    private boolean enable = false;
     /**
      * 访问的域名
      */
