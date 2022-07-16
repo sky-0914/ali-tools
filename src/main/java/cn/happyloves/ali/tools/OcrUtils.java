@@ -68,7 +68,7 @@ public final class OcrUtils {
          * @param ocrClient Client:OCR客户端
          * @param request   RecognizeIdcardRequest:参数
          */
-        public static void recognizeIdCard(Client ocrClient, RecognizeIdcardRequest request) {
+        public static void idCard(Client ocrClient, RecognizeIdcardRequest request) {
             RuntimeOptions runtime = new RuntimeOptions();
             try {
                 // 复制代码运行请自行打印 API 的返回值
