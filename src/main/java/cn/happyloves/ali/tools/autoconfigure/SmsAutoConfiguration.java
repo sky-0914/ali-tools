@@ -1,5 +1,6 @@
 package cn.happyloves.ali.tools.autoconfigure;
 
+import cn.happyloves.ali.tools.bean.SMSClient;
 import cn.happyloves.ali.tools.condiotion.SmsCondition;
 import cn.happyloves.ali.tools.properties.SmsProperties;
 import com.aliyuncs.DefaultAcsClient;
@@ -36,11 +37,17 @@ public class SmsAutoConfiguration {
     /**
      * create IAcsClient client
      */
+//    @Bean
+//    public IAcsClient smsClient() {
+//        log.info("初始化 SMS Client...");
+//        DefaultProfile profile = DefaultProfile.getProfile(smsProperties.getRegionId(), smsProperties.getAccessKeyId(), smsProperties.getAccessKeySecret());
+//        return new DefaultAcsClient(profile);
+//    }
     @Bean
-    public IAcsClient smsClient() {
+    public SMSClient smsClient() {
         log.info("初始化 SMS Client...");
         DefaultProfile profile = DefaultProfile.getProfile(smsProperties.getRegionId(), smsProperties.getAccessKeyId(), smsProperties.getAccessKeySecret());
-        return new DefaultAcsClient(profile);
+        return new SMSClient(profile);
     }
 
 }

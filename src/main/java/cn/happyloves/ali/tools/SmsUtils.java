@@ -1,5 +1,6 @@
 package cn.happyloves.ali.tools;
 
+import cn.happyloves.ali.tools.bean.SMSClient;
 import cn.happyloves.ali.tools.properties.SmsProperties;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.json.JSONUtil;
@@ -49,7 +50,7 @@ public final class SmsUtils {
      * @param sendSmsRequest 请求参数
      * @return 是否发送成功
      */
-    public static boolean sendSms(IAcsClient smsClient, SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
+    public static boolean sendSms(SMSClient smsClient, SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);

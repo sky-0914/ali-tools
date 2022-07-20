@@ -1,9 +1,9 @@
 package cn.happyloves.ali.tools;
 
+import cn.happyloves.ali.tools.bean.ORCClient;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.aliyun.ocr_api20210707.Client;
 import com.aliyun.ocr_api20210707.models.RecognizeIdcardRequest;
 import com.aliyun.ocr_api20210707.models.RecognizeIdcardResponse;
 import com.aliyun.tea.TeaException;
@@ -68,7 +68,7 @@ public final class OcrUtils {
          * @param ocrClient Client:OCR客户端
          * @param request   RecognizeIdcardRequest:参数
          */
-        public static void idCard(Client ocrClient, RecognizeIdcardRequest request) {
+        public static void idCard(ORCClient ocrClient, RecognizeIdcardRequest request) {
             RuntimeOptions runtime = new RuntimeOptions();
             try {
                 // 复制代码运行请自行打印 API 的返回值
