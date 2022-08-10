@@ -4,6 +4,7 @@ import cn.happyloves.ali.tools.bean.ORCClient;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.aliyun.ocr_api20210707.models.RecognizeAdvancedRequest;
 import com.aliyun.ocr_api20210707.models.RecognizeIdcardRequest;
 import com.aliyun.ocr_api20210707.models.RecognizeIdcardResponse;
 import com.aliyun.tea.TeaException;
@@ -81,6 +82,26 @@ public final class OcrUtils {
             } catch (Exception _error) {
                 TeaException error = new TeaException(_error.getMessage(), _error);
                 log.error(error.message);
+                // 如有需要，请打印 error
+                com.aliyun.teautil.Common.assertAsString(error.message);
+            }
+        }
+
+        /**
+         * 文本识别
+         *
+         * @param ocrClient Client:OCR客户端
+         * @param request   RecognizeAdvancedRequest:参数
+         */
+        public static void advancedText(ORCClient ocrClient, RecognizeAdvancedRequest request) {
+            RuntimeOptions runtime = new RuntimeOptions();
+            try {
+                ocrClient.recognizeAdvancedWithOptions(request, runtime);
+            } catch (TeaException error) {
+                // 如有需要，请打印 error
+                com.aliyun.teautil.Common.assertAsString(error.message);
+            } catch (Exception _error) {
+                TeaException error = new TeaException(_error.getMessage(), _error);
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
             }
