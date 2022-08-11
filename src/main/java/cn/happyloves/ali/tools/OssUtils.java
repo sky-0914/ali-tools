@@ -1,6 +1,6 @@
 package cn.happyloves.ali.tools;
 
-import cn.happyloves.ali.tools.properties.OssProperties;
+import cn.happyloves.ali.tools.properties.AliToolsProperties;
 import com.aliyun.oss.HttpMethod;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
@@ -135,7 +135,7 @@ public final class OssUtils {
          * @param prefix        前缀
          * @return 列举文件集合
          */
-        public static List<String> listFiles(OSSClient ossClient, OssProperties ossProperties, String prefix) {
+        public static List<String> listFiles(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String prefix) {
             ObjectListing objectListing = ossClient.listObjects(ossProperties.getBucketName(), prefix);
             List<OSSObjectSummary> ossObjectSummaries = objectListing.getObjectSummaries();
             List<String> keys = new ArrayList<>();
@@ -155,7 +155,7 @@ public final class OssUtils {
          * @param listObjectsRequest 请求参数
          * @return url集合
          */
-        public static List<String> listUrls(OSSClient ossClient, OssProperties ossProperties, ListObjectsRequest listObjectsRequest) {
+        public static List<String> listUrls(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, ListObjectsRequest listObjectsRequest) {
             // 递归列出fun目录下的所有文件。
             // 列出文件。
             ObjectListing listing = ossClient.listObjects(listObjectsRequest);
@@ -176,7 +176,7 @@ public final class OssUtils {
          * @param prefix        前缀
          * @return 返回值
          */
-        public static List<String> deleteSpecifiedPrefixFile(OSSClient ossClient, OssProperties ossProperties, String prefix) {
+        public static List<String> deleteSpecifiedPrefixFile(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String prefix) {
             String bucketName = ossProperties.getBucketName();
             String nextMarker = null;
             List<String> keys = new ArrayList<>();
@@ -210,7 +210,7 @@ public final class OssUtils {
          * @param keys          key等同于ObjectName
          * @return 返回值
          */
-        public static List<String> batchDeleteFile(OSSClient ossClient, OssProperties ossProperties, List<String> keys) {
+        public static List<String> batchDeleteFile(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, List<String> keys) {
             List<String> files = new ArrayList<>(keys.size());
             keys.forEach(item -> files.add(ossProperties.getHome().concat("/").concat(item)));
             DeleteObjectsResult deleteObjectsResult = ossClient.deleteObjects(new DeleteObjectsRequest(ossProperties.getBucketName()).withKeys(files));
@@ -226,7 +226,7 @@ public final class OssUtils {
          * @param ossProperties OSS配置属性
          * @param objectName    文件夹名称
          */
-        public static void deleteFile(OSSClient ossClient, OssProperties ossProperties, String objectName) {
+        public static void deleteFile(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String objectName) {
             ossClient.deleteObject(ossProperties.getBucketName(), ossProperties.getHome().concat("/").concat(objectName));
         }
 
@@ -239,7 +239,7 @@ public final class OssUtils {
          * @param fileName      文件名称
          * @return 返回值
          */
-        public static boolean checkFileWhetherExist(OSSClient ossClient, OssProperties ossProperties, String fileName) {
+        public static boolean checkFileWhetherExist(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String fileName) {
             return ossClient.doesObjectExist(ossProperties.getBucketName(), ossProperties.getHome().concat("/").concat(fileName));
         }
 
@@ -253,7 +253,7 @@ public final class OssUtils {
          * @return 返回值
          * @throws Exception 异常
          */
-        public static String uploadByFilePath(OSSClient ossClient, OssProperties ossProperties, String fileName, String filePath) throws Exception {
+        public static String uploadByFilePath(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String fileName, String filePath) throws Exception {
             return upload(ossClient, ossProperties, fileName, new FileInputStream(filePath));
         }
 
@@ -267,7 +267,7 @@ public final class OssUtils {
          * @return 返回值
          * @throws Exception 异常
          */
-        public static String uploadByUrl(OSSClient ossClient, OssProperties ossProperties, String fileName, String url) throws Exception {
+        public static String uploadByUrl(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String fileName, String url) throws Exception {
             return upload(ossClient, ossProperties, fileName, new URL(url).openStream());
         }
 
@@ -282,7 +282,7 @@ public final class OssUtils {
          * @return 返回值
          * @throws Exception 异常
          */
-        public static String upload(OSSClient ossClient, OssProperties ossProperties, String fileName, InputStream inputStream, long expireTime) throws Exception {
+        public static String upload(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String fileName, InputStream inputStream, long expireTime) throws Exception {
             String home = ossProperties.getHome();
             String cdn = ossProperties.getCdn();
             String bucketName = ossProperties.getBucketName();
@@ -318,7 +318,7 @@ public final class OssUtils {
          * @return 返回值
          * @throws Exception 异常
          */
-        public static String upload(OSSClient ossClient, OssProperties ossProperties, String fileName, InputStream inputStream) throws Exception {
+        public static String upload(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String fileName, InputStream inputStream) throws Exception {
             String home = ossProperties.getHome();
             String bucketName = ossProperties.getBucketName();
             boolean whetherIsExist = checkFileWhetherExist(ossClient, ossProperties, fileName);
@@ -344,7 +344,7 @@ public final class OssUtils {
          * @return 返回值
          * @throws Exception 异常
          */
-        public static String overwritingUpload(OSSClient ossClient, OssProperties ossProperties, String fileName, InputStream inputStream) throws Exception {
+        public static String overwritingUpload(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, String fileName, InputStream inputStream) throws Exception {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setObjectAcl(CannedAccessControlList.PublicReadWrite);
             PutObjectResult putObjectResult = ossClient.putObject(ossProperties.getBucketName(), ossProperties.getHome().concat("/").concat(fileName), inputStream, metadata);
@@ -363,7 +363,7 @@ public final class OssUtils {
          * @param fileName      文件名称
          * @return 返回值
          */
-        private static String generateUrl(OssProperties ossProperties, String fileName) {
+        private static String generateUrl(AliToolsProperties.OssProperties ossProperties, String fileName) {
             String cdn = ossProperties.getCdn();
             String home = ossProperties.getHome();
             if (StringUtils.isNotBlank(cdn)) {
@@ -373,7 +373,7 @@ public final class OssUtils {
             }
         }
 
-        public static void batchDownLoadOssFile(OSSClient ossClient, OssProperties ossProperties, List<String> fileNames, String zipFileName, HttpServletResponse response) {
+        public static void batchDownLoadOssFile(OSSClient ossClient, AliToolsProperties.OssProperties ossProperties, List<String> fileNames, String zipFileName, HttpServletResponse response) {
             response.setCharacterEncoding("utf-8");
             response.setContentType("multipart/form-data");
             response.setHeader("Content-Disposition", "attachment;fileName=" + zipFileName + ".zip");

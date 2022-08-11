@@ -17,9 +17,9 @@ ali-tools目前支持
 第二步：配置属性
 ```yaml
 ali-tools:
+  accessKeyId: ${accessKeyId}
+  accessKeySecret: ${accessKeySecret}
   oss:
-    accessKeyId: ${accessKeyId}
-    accessKeySecret: ${accessKeySecret}
     endpoint: oss-cn-shanghai.aliyuncs.com
     bucketName: happyloves
 #    HTTPProtocol: https #默认为http
@@ -29,8 +29,6 @@ ali-tools:
 #cdn (https://xxx.xxx.com/upload/xxx.xxx)
 #    cdn: 不传则为oss域名，反之为cdn
   sms:
-    accessKeyId: ${ali-tools.oss.accessKeyId}
-    accessKeySecret: ${ali-tools.oss.accessKeySecret}
     singleName:
     templateCode:
 ```

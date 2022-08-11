@@ -2,7 +2,7 @@ package cn.happyloves.ali.tools.autoconfigure;
 
 import cn.happyloves.ali.tools.bean.ORCClient;
 import cn.happyloves.ali.tools.condiotion.OcrCondition;
-import cn.happyloves.ali.tools.properties.OcrProperties;
+import cn.happyloves.ali.tools.properties.AliToolsProperties;
 import com.aliyun.teaopenapi.models.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,39 +18,27 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(OcrProperties.class)
+@EnableConfigurationProperties(AliToolsProperties.class)
 @Conditional(OcrCondition.class)
-@ConditionalOnProperty(prefix = "ali-tools.ocr", name = {"enabled"}, matchIfMissing = true)
+@ConditionalOnProperty(prefix = "ali-tools", name = {"enabled"}, matchIfMissing = true)
 public class OcrAutoConfiguration {
 
-    private OcrProperties ocrProperties;
+    private AliToolsProperties properties;
 
     @Autowired
-    public void setOcrProperties(OcrProperties ocrProperties) {
-        this.ocrProperties = ocrProperties;
+    public void setAliToolsProperties(AliToolsProperties properties) {
+        this.properties = properties;
     }
-
-//    @Bean
-//    public Client ocrClient() throws Exception {
-//        log.info("初始化 OCR Client...");
-//        return new Client(new Config()
-//                // 您的 AccessKey ID
-//                .setAccessKeyId(ocrProperties.getAccessKeyId())
-//                // 您的 AccessKey Secret
-//                .setAccessKeySecret(ocrProperties.getAccessKeySecret())
-//                // 访问的域名
-//                .setEndpoint(ocrProperties.getEndpoint()));
-//    }
 
     @Bean
     public ORCClient ocrClient() throws Exception {
         log.info("初始化 OCR Client...");
         return new ORCClient(new Config()
                 // 您的 AccessKey ID
-                .setAccessKeyId(ocrProperties.getAccessKeyId())
+                .setAccessKeyId(properties.getAccessKeyId())
                 // 您的 AccessKey Secret
-                .setAccessKeySecret(ocrProperties.getAccessKeySecret())
+                .setAccessKeySecret(properties.getAccessKeySecret())
                 // 访问的域名
-                .setEndpoint(ocrProperties.getEndpoint()));
+                .setEndpoint(properties.getOcr().getEndpoint()));
     }
 }

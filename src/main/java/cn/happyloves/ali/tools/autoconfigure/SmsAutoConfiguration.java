@@ -2,9 +2,7 @@ package cn.happyloves.ali.tools.autoconfigure;
 
 import cn.happyloves.ali.tools.bean.SMSClient;
 import cn.happyloves.ali.tools.condiotion.SmsCondition;
-import cn.happyloves.ali.tools.properties.SmsProperties;
-import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.IAcsClient;
+import cn.happyloves.ali.tools.properties.AliToolsProperties;
 import com.aliyuncs.profile.DefaultProfile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,30 +21,21 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(SmsProperties.class)
+@EnableConfigurationProperties(AliToolsProperties.class)
 @Conditional(SmsCondition.class)
-@ConditionalOnProperty(prefix = "ali-tools.sms", name = {"enabled"}, matchIfMissing = true)
+@ConditionalOnProperty(prefix = "ali-tools", name = {"enabled"}, matchIfMissing = true)
 public class SmsAutoConfiguration {
-    private final SmsProperties smsProperties;
+    private AliToolsProperties properties;
 
     @Autowired
-    public SmsAutoConfiguration(SmsProperties smsProperties) {
-        this.smsProperties = smsProperties;
+    public void setAliToolsProperties(AliToolsProperties properties) {
+        this.properties = properties;
     }
 
-    /**
-     * create IAcsClient client
-     */
-//    @Bean
-//    public IAcsClient smsClient() {
-//        log.info("初始化 SMS Client...");
-//        DefaultProfile profile = DefaultProfile.getProfile(smsProperties.getRegionId(), smsProperties.getAccessKeyId(), smsProperties.getAccessKeySecret());
-//        return new DefaultAcsClient(profile);
-//    }
     @Bean
     public SMSClient smsClient() {
         log.info("初始化 SMS Client...");
-        DefaultProfile profile = DefaultProfile.getProfile(smsProperties.getRegionId(), smsProperties.getAccessKeyId(), smsProperties.getAccessKeySecret());
+        DefaultProfile profile = DefaultProfile.getProfile(properties.getSms().getRegionId(), properties.getAccessKeyId(), properties.getAccessKeySecret());
         return new SMSClient(profile);
     }
 

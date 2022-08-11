@@ -1,7 +1,7 @@
 package cn.happyloves.ali.tools.autoconfigure;
 
 import cn.happyloves.ali.tools.condiotion.OssCondition;
-import cn.happyloves.ali.tools.properties.OssProperties;
+import cn.happyloves.ali.tools.properties.AliToolsProperties;
 import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;
@@ -22,15 +22,15 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@EnableConfigurationProperties(OssProperties.class)
+@EnableConfigurationProperties(AliToolsProperties.class)
 @Conditional(OssCondition.class)
-@ConditionalOnProperty(prefix = "ali-tools.oss", name = {"enabled"}, matchIfMissing = true)
+@ConditionalOnProperty(prefix = "ali-tools", name = {"enabled"}, matchIfMissing = true)
 public class OssAutoConfiguration {
-    private final OssProperties ossProperties;
+    private AliToolsProperties properties;
 
     @Autowired
-    public OssAutoConfiguration(OssProperties ossProperties) {
-        this.ossProperties = ossProperties;
+    public void setAliToolsProperties(AliToolsProperties properties) {
+        this.properties = properties;
     }
 
     /**
@@ -39,10 +39,10 @@ public class OssAutoConfiguration {
     @Bean
     public OSSClient ossClient() {
         log.info("初始化 OSS Client...");
-        ClientConfiguration config = ossProperties.getClientConfig();
-        String endpoint = ossProperties.getEndpoint();
-        String accessKeyId = ossProperties.getAccessKeyId();
-        String accessKeySecret = ossProperties.getAccessKeySecret();
+        String accessKeyId = properties.getAccessKeyId();
+        String accessKeySecret = properties.getAccessKeySecret();
+        ClientConfiguration config = properties.getOss().getClientConfig();
+        String endpoint = properties.getOss().getEndpoint();
         DefaultCredentialProvider defaultCredentialProvider = new DefaultCredentialProvider(accessKeyId, accessKeySecret);
         if (config == null) {
             config = new ClientConfiguration();
