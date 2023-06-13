@@ -84,8 +84,8 @@ public final class OcrUtils {
             }
         }
 
-        public static void a(ORCClient ocrClient, RecognizeHandwritingRequest request){
-            com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+        public static void a(ORCClient ocrClient, RecognizeHandwritingRequest request) {
+            RuntimeOptions runtime = new RuntimeOptions();
             try {
                 // 复制代码运行请自行打印 API 的返回值
                 ocrClient.recognizeHandwritingWithOptions(request, runtime);
