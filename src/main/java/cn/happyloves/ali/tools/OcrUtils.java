@@ -5,6 +5,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.aliyun.ocr_api20210707.models.RecognizeAdvancedRequest;
+import com.aliyun.ocr_api20210707.models.RecognizeHandwritingRequest;
 import com.aliyun.ocr_api20210707.models.RecognizeIdcardRequest;
 import com.aliyun.ocr_api20210707.models.RecognizeIdcardResponse;
 import com.aliyun.tea.TeaException;
@@ -64,6 +65,41 @@ public final class OcrUtils {
     public static class Recognize {
 
         /**
+         * 文本识别
+         *
+         * @param ocrClient Client:OCR客户端
+         * @param request   RecognizeAdvancedRequest:参数
+         */
+        public static void advancedText(ORCClient ocrClient, RecognizeAdvancedRequest request) {
+            RuntimeOptions runtime = new RuntimeOptions();
+            try {
+                ocrClient.recognizeAdvancedWithOptions(request, runtime);
+            } catch (TeaException teaException) {
+                // 如有需要，请打印 error
+                com.aliyun.teautil.Common.assertAsString(teaException.message);
+            } catch (Exception exception) {
+                TeaException error = new TeaException(exception.getMessage(), exception);
+                // 如有需要，请打印 error
+                com.aliyun.teautil.Common.assertAsString(error.message);
+            }
+        }
+
+        public static void a(ORCClient ocrClient, RecognizeHandwritingRequest request){
+            com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
+            try {
+                // 复制代码运行请自行打印 API 的返回值
+                ocrClient.recognizeHandwritingWithOptions(request, runtime);
+            } catch (TeaException error) {
+                // 如有需要，请打印 error
+                com.aliyun.teautil.Common.assertAsString(error.message);
+            } catch (Exception _error) {
+                TeaException error = new TeaException(_error.getMessage(), _error);
+                // 如有需要，请打印 error
+                com.aliyun.teautil.Common.assertAsString(error.message);
+            }
+        }
+
+        /**
          * 识别身份证
          *
          * @param ocrClient Client:OCR客户端
@@ -87,24 +123,6 @@ public final class OcrUtils {
             }
         }
 
-        /**
-         * 文本识别
-         *
-         * @param ocrClient Client:OCR客户端
-         * @param request   RecognizeAdvancedRequest:参数
-         */
-        public static void advancedText(ORCClient ocrClient, RecognizeAdvancedRequest request) {
-            RuntimeOptions runtime = new RuntimeOptions();
-            try {
-                ocrClient.recognizeAdvancedWithOptions(request, runtime);
-            } catch (TeaException error) {
-                // 如有需要，请打印 error
-                com.aliyun.teautil.Common.assertAsString(error.message);
-            } catch (Exception _error) {
-                TeaException error = new TeaException(_error.getMessage(), _error);
-                // 如有需要，请打印 error
-                com.aliyun.teautil.Common.assertAsString(error.message);
-            }
-        }
+
     }
 }
