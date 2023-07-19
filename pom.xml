@@ -79,6 +79,20 @@
             <version>1.1.7</version>
         </dependency>
 
+        <!--    KMS    -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>alibabacloud-dkms-gcs-sdk</artifactId>
+            <version>0.2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>tea</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <!--    KMS    -->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
