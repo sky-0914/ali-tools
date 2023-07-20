@@ -1,10 +1,7 @@
 package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.KMSClient;
-import com.aliyun.dkms.gcs.sdk.models.DecryptRequest;
-import com.aliyun.dkms.gcs.sdk.models.DecryptResponse;
-import com.aliyun.dkms.gcs.sdk.models.EncryptRequest;
-import com.aliyun.dkms.gcs.sdk.models.EncryptResponse;
+import com.aliyun.dkms.gcs.sdk.models.*;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -41,4 +38,38 @@ public class KmsUtils {
         String requestId = decryptResponse.getRequestId();
     }
 
+    public void sign(KMSClient client) throws Exception {
+        //密钥的ID或别名（Alias）。
+        String signerKeyId = "<the signer key id>";
+        //待签名数据。
+        byte[] message = null;
+
+        SignRequest signRequest = new SignRequest();
+        signRequest.setKeyId(signerKeyId);
+        signRequest.setMessage(message);
+
+        SignResponse signResponse = client.sign(signRequest);
+        //签名值。
+        byte[] signature = signResponse.getSignature();
+        //请求ID。
+        String requestId = signResponse.getRequestId();
+    }
+
+    public void verify(KMSClient client) throws Exception {
+        //密钥的ID或别名（Alias）。
+        String signerKeyId = "<the signer key id>";
+        //待验证签名的数据。
+        byte[] message = null;
+
+        VerifyRequest verifyRequest = new VerifyRequest();
+        verifyRequest.setKeyId(signerKeyId);
+        verifyRequest.setMessage(message);
+        verifyRequest.setSignature(new byte[]{});
+
+        VerifyResponse verifyResponse = client.verify(verifyRequest);
+        //验签结果。
+        boolean valid = verifyResponse.getValue();
+        //请求ID。
+        String requestId = verifyResponse.getRequestId();
+    }
 }
