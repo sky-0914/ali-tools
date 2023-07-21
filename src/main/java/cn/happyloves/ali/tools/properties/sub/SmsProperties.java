@@ -1,4 +1,4 @@
-package cn.happyloves.ali.tools.properties;
+package cn.happyloves.ali.tools.properties.sub;
 
 import lombok.Data;
 
