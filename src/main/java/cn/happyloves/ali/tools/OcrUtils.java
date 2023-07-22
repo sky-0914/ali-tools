@@ -60,12 +60,12 @@ public final class OcrUtils {
     }
 
     /**
-     * 识别工具
+     * 通用文字识别
      */
-    public static class Recognize {
-
+    public static class Text {
         /**
-         * 文本识别
+         * 全文识别高精版
+         * url:https://next.api.aliyun.com/api/ocr-api/2021-07-07/RecognizeAdvanced?sdkStyle=dara&params={%22OutputCharInfo%22:false}
          *
          * @param ocrClient Client:OCR客户端
          * @param request   RecognizeAdvancedRequest:参数
@@ -84,7 +84,14 @@ public final class OcrUtils {
             }
         }
 
-        public static void a(ORCClient ocrClient, RecognizeHandwritingRequest request) {
+        /**
+         * 通用手写体识别
+         * url:https://next.api.aliyun.com/api/ocr-api/2021-07-07/RecognizeHandwriting?sdkStyle=dara
+         *
+         * @param ocrClient Client:OCR客户端
+         * @param request   RecognizeHandwritingRequest:参数
+         */
+        public static void recognizeHandwriting(ORCClient ocrClient, RecognizeHandwritingRequest request) {
             RuntimeOptions runtime = new RuntimeOptions();
             try {
                 // 复制代码运行请自行打印 API 的返回值
@@ -98,6 +105,12 @@ public final class OcrUtils {
                 com.aliyun.teautil.Common.assertAsString(error.message);
             }
         }
+    }
+
+    /**
+     * 个人证照识别
+     */
+    public static class PersonalCertificate {
 
         /**
          * 识别身份证
