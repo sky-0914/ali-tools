@@ -2,6 +2,7 @@ package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.SMSClient;
 import cn.happyloves.ali.tools.properties.AliToolsProperties;
+import cn.happyloves.ali.tools.properties.sub.SmsProperties;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.json.JSONUtil;
 import com.aliyuncs.CommonRequest;
@@ -50,7 +51,7 @@ public final class SmsUtils {
      * @param sendSmsRequest 请求参数
      * @return 是否发送成功
      */
-    public static boolean sendSms(SMSClient smsClient, AliToolsProperties.SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
+    public static boolean sendSms(SMSClient smsClient, SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);
@@ -84,7 +85,7 @@ public final class SmsUtils {
      * @param sendBatchSmsRequest 请求参数
      * @return 是否发送成功
      */
-    public static boolean sendBatchSms(IAcsClient smsClient, AliToolsProperties.SmsProperties smsProperties, SendBatchSmsRequest sendBatchSmsRequest) {
+    public static boolean sendBatchSms(IAcsClient smsClient, SmsProperties smsProperties, SendBatchSmsRequest sendBatchSmsRequest) {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);

@@ -47,7 +47,7 @@ public final class OcrUtils {
                 .body(bodyJson.toString())
                 .timeout(20000)
                 .execute().body();
-        if (JSONUtil.isJson(body)) {
+        if (JSONUtil.isTypeJSON(body)) {
             JSONObject jsonObject = JSONUtil.parseObj(body);
             final Boolean success = jsonObject.getBool("success");
             if (!success) {
