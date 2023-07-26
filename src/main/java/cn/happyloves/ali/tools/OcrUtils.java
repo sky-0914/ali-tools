@@ -4,10 +4,7 @@ import cn.happyloves.ali.tools.bean.ORCClient;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.aliyun.ocr_api20210707.models.RecognizeAdvancedRequest;
-import com.aliyun.ocr_api20210707.models.RecognizeHandwritingRequest;
-import com.aliyun.ocr_api20210707.models.RecognizeIdcardRequest;
-import com.aliyun.ocr_api20210707.models.RecognizeIdcardResponse;
+import com.aliyun.ocr_api20210707.models.*;
 import com.aliyun.tea.TeaException;
 import com.aliyun.teautil.models.RuntimeOptions;
 import lombok.extern.slf4j.Slf4j;
@@ -70,10 +67,11 @@ public final class OcrUtils {
          * @param ocrClient Client:OCR客户端
          * @param request   RecognizeAdvancedRequest:参数
          */
-        public static void advancedText(ORCClient ocrClient, RecognizeAdvancedRequest request) {
+        public static RecognizeAdvancedResponse advancedText(ORCClient ocrClient, RecognizeAdvancedRequest request) {
             RuntimeOptions runtime = new RuntimeOptions();
+            RecognizeAdvancedResponse response = null;
             try {
-                ocrClient.recognizeAdvancedWithOptions(request, runtime);
+                response = ocrClient.recognizeAdvancedWithOptions(request, runtime);
             } catch (TeaException teaException) {
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(teaException.message);
@@ -82,6 +80,7 @@ public final class OcrUtils {
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
             }
+            return response;
         }
 
         /**
@@ -91,11 +90,12 @@ public final class OcrUtils {
          * @param ocrClient Client:OCR客户端
          * @param request   RecognizeHandwritingRequest:参数
          */
-        public static void recognizeHandwriting(ORCClient ocrClient, RecognizeHandwritingRequest request) {
+        public static RecognizeHandwritingResponse recognizeHandwriting(ORCClient ocrClient, RecognizeHandwritingRequest request) {
             RuntimeOptions runtime = new RuntimeOptions();
+            RecognizeHandwritingResponse response = null;
             try {
                 // 复制代码运行请自行打印 API 的返回值
-                ocrClient.recognizeHandwritingWithOptions(request, runtime);
+                response = ocrClient.recognizeHandwritingWithOptions(request, runtime);
             } catch (TeaException error) {
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
@@ -104,6 +104,7 @@ public final class OcrUtils {
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
             }
+            return response;
         }
     }
 
@@ -118,11 +119,12 @@ public final class OcrUtils {
          * @param ocrClient Client:OCR客户端
          * @param request   RecognizeIdcardRequest:参数
          */
-        public static void idCard(ORCClient ocrClient, RecognizeIdcardRequest request) {
+        public static RecognizeIdcardResponse idCard(ORCClient ocrClient, RecognizeIdcardRequest request) {
             RuntimeOptions runtime = new RuntimeOptions();
+            RecognizeIdcardResponse response = null;
             try {
                 // 复制代码运行请自行打印 API 的返回值
-                final RecognizeIdcardResponse response = ocrClient.recognizeIdcardWithOptions(request, runtime);
+                response = ocrClient.recognizeIdcardWithOptions(request, runtime);
                 log.info(JSONUtil.toJsonStr(response));
             } catch (TeaException error) {
                 log.error(error.message);
@@ -134,6 +136,7 @@ public final class OcrUtils {
                 // 如有需要，请打印 error
                 com.aliyun.teautil.Common.assertAsString(error.message);
             }
+            return response;
         }
 
 
