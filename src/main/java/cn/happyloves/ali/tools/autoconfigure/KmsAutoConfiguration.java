@@ -38,10 +38,14 @@ public class KmsAutoConfiguration {
         Config config = new Config()
                 .setProtocol(kms.getProtocol())
                 .setEndpoint(kms.getEndpoint());
-        config.setCaFilePath(kms.getCaCertPath());// 设置CA证书文件路径，还支持设置CA证书内容，请根据需要选择。
-        //.setCa(caCert) // 设置CA证书内容。
-        config.setClientKeyFile(kms.getClientKeyFilePath());//设置应用身份凭证文件路径，还支持设置应用身份凭证内容，请根据需要选择。
-        //.setClientKeyContent(clientKey)//设置应用身份凭证内容。
+        // 设置CA证书文件路径，还支持设置CA证书内容，请根据需要选择。
+        config.setCaFilePath(kms.getCaCertPath());
+        // 设置CA证书内容。
+        //.setCa(caCert)
+        //设置应用身份凭证文件路径，还支持设置应用身份凭证内容，请根据需要选择。
+        config.setClientKeyFile(kms.getClientKeyFilePath());
+        //设置应用身份凭证内容。
+        //.setClientKeyContent(clientKey)
         config.setPassword(kms.getClientKeyPass());
         return new KMSClient(config);
     }
