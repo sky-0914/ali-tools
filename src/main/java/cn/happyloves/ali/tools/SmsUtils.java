@@ -1,7 +1,9 @@
 package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.SMSClient;
-import cn.happyloves.ali.tools.properties.AliToolsProperties;
+import cn.happyloves.ali.tools.model.request.SMSBatchJsonRequest;
+import cn.happyloves.ali.tools.model.request.SMSSendBatchRequest;
+import cn.happyloves.ali.tools.model.request.SMSSendRequest;
 import cn.happyloves.ali.tools.properties.sub.SmsProperties;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.json.JSONUtil;
@@ -13,7 +15,6 @@ import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -51,7 +52,7 @@ public final class SmsUtils {
      * @param sendSmsRequest 请求参数
      * @return 是否发送成功
      */
-    public static boolean sendSms(SMSClient smsClient, SmsProperties smsProperties, SendSmsRequest sendSmsRequest) {
+    public static boolean sendSms(SMSClient smsClient, SmsProperties smsProperties, SMSSendRequest sendSmsRequest) {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);
@@ -85,18 +86,18 @@ public final class SmsUtils {
      * @param sendBatchSmsRequest 请求参数
      * @return 是否发送成功
      */
-    public static boolean sendBatchSms(IAcsClient smsClient, SmsProperties smsProperties, SendBatchSmsRequest sendBatchSmsRequest) {
+    public static boolean sendBatchSms(IAcsClient smsClient, SmsProperties smsProperties, SMSSendBatchRequest sendBatchSmsRequest) {
         CommonRequest request = new CommonRequest();
         request.setSysMethod(MethodType.POST);
         request.setSysDomain(SYS_DOMAIN);
         request.setSysVersion(SYS_VERSION);
         request.setSysAction(SysAction.SendBatchSms.name());
         request.putQueryParameter(REGION_ID, smsProperties.getRegionId());
-        final List<BatchSmsJson> jsonList = sendBatchSmsRequest.getJsonList();
-        String phoneNumberJson = JSONUtil.toJsonStr(jsonList.stream().map(BatchSmsJson::getPhone).collect(Collectors.toList()));
-        String signNameJson = JSONUtil.toJsonStr(jsonList.stream().map(BatchSmsJson::getSign).collect(Collectors.toList()));
-        String templateParamJson = JSONUtil.toJsonStr(jsonList.stream().map(BatchSmsJson::getTemplateParam).collect(Collectors.toList()));
-        final List<String> smsUpExtendCodeJsonList = jsonList.stream().map(BatchSmsJson::getUpExtendCode).collect(Collectors.toList());
+        final List<SMSBatchJsonRequest> jsonList = sendBatchSmsRequest.getJsonList();
+        String phoneNumberJson = JSONUtil.toJsonStr(jsonList.stream().map(SMSBatchJsonRequest::getPhone).collect(Collectors.toList()));
+        String signNameJson = JSONUtil.toJsonStr(jsonList.stream().map(SMSBatchJsonRequest::getSign).collect(Collectors.toList()));
+        String templateParamJson = JSONUtil.toJsonStr(jsonList.stream().map(SMSBatchJsonRequest::getTemplateParam).collect(Collectors.toList()));
+        final List<String> smsUpExtendCodeJsonList = jsonList.stream().map(SMSBatchJsonRequest::getUpExtendCode).collect(Collectors.toList());
         if (ArrayUtil.isNotEmpty(smsUpExtendCodeJsonList)) {
             //上行短信扩展码，JSON数组格式。无特殊需要此字段的用户请忽略此字段
             request.putQueryParameter("SmsUpExtendCodeJson", JSONUtil.toJsonStr(smsUpExtendCodeJsonList));
@@ -118,56 +119,6 @@ public final class SmsUtils {
             log.error("ClientException ErrCode:[{}], ErrMsg:[{}]", e.getErrCode(), e.getErrMsg());
         }
         return false;
-    }
-
-    @Data
-    public static class SendSmsRequest {
-        /**
-         * 手机号码
-         */
-        private String phone;
-        /**
-         * 签名
-         */
-        private String sign;
-        /**
-         * 模板Code
-         */
-        private String templateCode;
-        /**
-         * 模板参数，JSON格式
-         */
-        private String templateParam;
-    }
-
-    @Data
-    public static class BatchSmsJson {
-        /**
-         * 手机号码
-         */
-        private String phone;
-        /**
-         * 签名
-         */
-        private String sign;
-        /**
-         * 模板参数，JSON格式
-         */
-        private String templateParam;
-        /**
-         * 上行短信扩展码,可不传
-         */
-        private String upExtendCode;
-    }
-
-    @Data
-    public static class SendBatchSmsRequest {
-        private List<BatchSmsJson> jsonList;
-        /**
-         * 模板Code
-         */
-        private String templateCode;
-
     }
 
 }
