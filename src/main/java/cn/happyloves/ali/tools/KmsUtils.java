@@ -1,6 +1,7 @@
 package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.KMSClient;
+import cn.happyloves.ali.tools.model.reponse.KMSEncryptResponse;
 import com.aliyun.dkms.gcs.sdk.models.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,23 +10,26 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2023/7/19 13:57
  */
 @Slf4j
-public class KmsUtils {
+public final class KmsUtils {
 
-    public void encrypt(KMSClient client) throws Exception {
-        EncryptRequest encryptRequest = new EncryptRequest();
-//        encryptRequest.setKeyId(cipherKeyId);
-//        encryptRequest.setPlaintext(originData);
+    public static KMSEncryptResponse encrypt(KMSClient client, EncryptRequest request) throws Exception {
 
-        EncryptResponse encryptResponse = client.encrypt(encryptRequest);
+        EncryptResponse encryptResponse = client.encrypt(request);
         //加密数据。
         byte[] cipherData = encryptResponse.getCiphertextBlob();
         //Cipher初始向量，用于解密数据。
         byte[] iv = encryptResponse.getIv();
         //请求ID。
         String requestId = encryptResponse.getRequestId();
+
+        final KMSEncryptResponse response = new KMSEncryptResponse();
+        response.setMessage(cipherData);
+        response.setIv(iv);
+        response.setRequestId(requestId);
+        return response;
     }
 
-    public void decrypt(KMSClient client) throws Exception {
+    public static void decrypt(KMSClient client) throws Exception {
         DecryptRequest decryptRequest = new DecryptRequest();
 //        decryptRequest.setKeyId(cipherKeyId);
 //        decryptRequest.setCiphertextBlob(cipherData);
@@ -38,7 +42,7 @@ public class KmsUtils {
         String requestId = decryptResponse.getRequestId();
     }
 
-    public void sign(KMSClient client) throws Exception {
+    public static void sign(KMSClient client) throws Exception {
         //密钥的ID或别名（Alias）。
         String signerKeyId = "<the signer key id>";
         //待签名数据。
@@ -55,7 +59,7 @@ public class KmsUtils {
         String requestId = signResponse.getRequestId();
     }
 
-    public void verify(KMSClient client) throws Exception {
+    public static void verify(KMSClient client) throws Exception {
         //密钥的ID或别名（Alias）。
         String signerKeyId = "<the signer key id>";
         //待验证签名的数据。
