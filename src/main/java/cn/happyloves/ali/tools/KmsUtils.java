@@ -1,7 +1,6 @@
 package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.KMSClient;
-import cn.happyloves.ali.tools.model.reponse.KMSEncryptResponse;
 import com.aliyun.dkms.gcs.sdk.models.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,37 +11,52 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class KmsUtils {
 
-    public static KMSEncryptResponse encrypt(KMSClient client, EncryptRequest request) throws Exception {
-
-        EncryptResponse encryptResponse = client.encrypt(request);
-        //加密数据。
-        byte[] cipherData = encryptResponse.getCiphertextBlob();
-        //Cipher初始向量，用于解密数据。
-        byte[] iv = encryptResponse.getIv();
-        //请求ID。
-        String requestId = encryptResponse.getRequestId();
-
-        final KMSEncryptResponse response = new KMSEncryptResponse();
-        response.setMessage(cipherData);
-        response.setIv(iv);
-        response.setRequestId(requestId);
+    /**
+     * 加密
+     *
+     * @param client  kms哭护短
+     * @param request 请求参数
+     * @return 加密返回值
+     * @throws Exception 异常信息
+     */
+    public static EncryptResponse encrypt(KMSClient client, EncryptRequest request) throws Exception {
+        EncryptResponse response = client.encrypt(request);
+//        //加密数据。
+//        byte[] cipherData = response.getCiphertextBlob();
+//        //Cipher初始向量，用于解密数据。
+//        byte[] iv = response.getIv();
+//        //请求ID。
+//        String requestId = response.getRequestId();
         return response;
     }
 
-    public static void decrypt(KMSClient client) throws Exception {
-        DecryptRequest decryptRequest = new DecryptRequest();
-//        decryptRequest.setKeyId(cipherKeyId);
-//        decryptRequest.setCiphertextBlob(cipherData);
-//        decryptRequest.setIv(iv);
+    /**
+     * 解密
+     *
+     * @param client  kms哭护短
+     * @param request 请求参数
+     * @return 加密返回值
+     * @throws Exception 异常信息
+     */
+    public static DecryptResponse decrypt(KMSClient client, DecryptRequest request) throws Exception {
 
-        DecryptResponse decryptResponse = client.decrypt(decryptRequest);
+        DecryptResponse response = client.decrypt(request);
         //原始数据。
-        byte[] originData = decryptResponse.getPlaintext();
+        byte[] originData = response.getPlaintext();
         //请求ID。
-        String requestId = decryptResponse.getRequestId();
+        String requestId = response.getRequestId();
+        return response;
     }
 
-    public static void sign(KMSClient client) throws Exception {
+    /**
+     * 加签
+     *
+     * @param client  kms哭护短
+     * @param request 请求参数
+     * @return 加密返回值
+     * @throws Exception 异常信息
+     */
+    public static SignResponse sign(KMSClient client, SignRequest request) throws Exception {
         //密钥的ID或别名（Alias）。
         String signerKeyId = "<the signer key id>";
         //待签名数据。
@@ -52,14 +66,23 @@ public final class KmsUtils {
         signRequest.setKeyId(signerKeyId);
         signRequest.setMessage(message);
 
-        SignResponse signResponse = client.sign(signRequest);
+        SignResponse response = client.sign(signRequest);
         //签名值。
-        byte[] signature = signResponse.getSignature();
+        byte[] signature = response.getSignature();
         //请求ID。
-        String requestId = signResponse.getRequestId();
+        String requestId = response.getRequestId();
+        return response;
     }
 
-    public static void verify(KMSClient client) throws Exception {
+    /**
+     * 验签
+     *
+     * @param client  kms哭护短
+     * @param request 请求参数
+     * @return 加密返回值
+     * @throws Exception 异常信息
+     */
+    public static VerifyResponse verify(KMSClient client, VerifyRequest request) throws Exception {
         //密钥的ID或别名（Alias）。
         String signerKeyId = "<the signer key id>";
         //待验证签名的数据。
@@ -70,10 +93,11 @@ public final class KmsUtils {
         verifyRequest.setMessage(message);
         verifyRequest.setSignature(new byte[]{});
 
-        VerifyResponse verifyResponse = client.verify(verifyRequest);
+        VerifyResponse response = client.verify(verifyRequest);
         //验签结果。
-        boolean valid = verifyResponse.getValue();
+        boolean valid = response.getValue();
         //请求ID。
-        String requestId = verifyResponse.getRequestId();
+        String requestId = response.getRequestId();
+        return response;
     }
 }
