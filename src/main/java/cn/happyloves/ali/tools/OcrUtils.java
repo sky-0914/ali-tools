@@ -22,6 +22,8 @@ import java.util.Map;
 @Slf4j
 public final class OcrUtils {
 
+    private static final String HTTP_SUCCESS_CODE = "200";
+
     /**
      * 身份证
      *
@@ -89,7 +91,7 @@ public final class OcrUtils {
             try {
                 RecognizeAdvancedResponse response = ocrClient.recognizeAdvancedWithOptions(request, new RuntimeOptions());
                 log.debug("ORC recognizeAdvanced Response Data: [{}]", JSONUtil.toJsonStr(response));
-                if ("200".equals(response.body.code)) {
+                if (HTTP_SUCCESS_CODE.equals(response.body.code)) {
                     return response.body.data;
                 }
             } catch (TeaException e) {
@@ -126,7 +128,7 @@ public final class OcrUtils {
                 // 复制代码运行请自行打印 API 的返回值
                 RecognizeHandwritingResponse response = ocrClient.recognizeHandwritingWithOptions(request, new RuntimeOptions());
                 log.debug("ORC recognizeHandwriting Response Data: [{}]", JSONUtil.toJsonStr(response));
-                if ("200".equals(response.body.code)) {
+                if (HTTP_SUCCESS_CODE.equals(response.body.code)) {
                     return response.body.data;
                 }
             } catch (TeaException e) {
