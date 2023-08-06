@@ -2,6 +2,7 @@ package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.ORCClient;
 import cn.happyloves.ali.tools.model.request.ORCRecognizeAdvancedRequest;
+import cn.happyloves.ali.tools.model.request.ORCRecognizeHandwritingRequest;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -66,36 +67,37 @@ public final class OcrUtils {
          * 全文识别高精版
          * url:https://next.api.aliyun.com/api/ocr-api/2021-07-07/RecognizeAdvanced?spm=api-workbench.API%20Document.0.0.112b4dc3iXL46R&sdkStyle=dara&tab=DOC&lang=JAVA
          *
-         * @param ocrClient Client:OCR客户端
-         * @param request   RecognizeAdvancedRequest:参数
+         * @param ocrClient  Client:OCR客户端
+         * @param orcRequest RecognizeAdvancedRequest:参数
          */
-        public static String advancedText(ORCClient ocrClient, ORCRecognizeAdvancedRequest request) {
-            final RecognizeAdvancedRequest orcRequest = new RecognizeAdvancedRequest();
-            orcRequest.setNeedRotate(request.isNeedRotate());
-            orcRequest.setNeedSortPage(request.isNeedSortPage());
-            orcRequest.setNoStamp(request.isNoStamp());
-            orcRequest.setOutputCharInfo(request.isOutputCharInfo());
-            orcRequest.setOutputFigure(request.isOutputFigure());
-            orcRequest.setOutputTable(request.isOutputTable());
-            orcRequest.setParagraph(request.isParagraph());
-            orcRequest.setRow(request.isRow());
-            if (StringUtils.isNotBlank(request.getUrl())) {
-                orcRequest.setUrl(request.getUrl());
+        public static String recognizeAdvanced(ORCClient ocrClient, ORCRecognizeAdvancedRequest orcRequest) {
+            final RecognizeAdvancedRequest request = new RecognizeAdvancedRequest();
+            request.setNeedRotate(orcRequest.isNeedRotate());
+            request.setNeedSortPage(orcRequest.isNeedSortPage());
+            request.setNoStamp(orcRequest.isNoStamp());
+            request.setOutputCharInfo(orcRequest.isOutputCharInfo());
+            request.setOutputFigure(orcRequest.isOutputFigure());
+            request.setOutputTable(orcRequest.isOutputTable());
+            request.setParagraph(orcRequest.isParagraph());
+            request.setRow(orcRequest.isRow());
+            if (StringUtils.isNotBlank(orcRequest.getUrl())) {
+                request.setUrl(orcRequest.getUrl());
             }
-            if (request.getBody() != null) {
-                orcRequest.setBody(request.getBody());
+            if (orcRequest.getBody() != null) {
+                request.setBody(orcRequest.getBody());
             }
             try {
-                RecognizeAdvancedResponse response = ocrClient.recognizeAdvancedWithOptions(orcRequest, new RuntimeOptions());
+                RecognizeAdvancedResponse response = ocrClient.recognizeAdvancedWithOptions(request, new RuntimeOptions());
+                log.debug("ORC recognizeAdvanced Response Data: [{}]", JSONUtil.toJsonStr(response));
                 if ("200".equals(response.body.code)) {
                     return response.body.data;
                 }
             } catch (TeaException e) {
                 // 如有需要，请打印 error
-                log.error("ORC advancedText ClientException ErrCode:[{}], ErrMsg:[{}]", e.getCode(), e.getMessage());
+                log.error("ORC recognizeAdvanced ClientException ErrCode:[{}], ErrMsg:[{}]", e.getCode(), e.getMessage());
             } catch (Exception e) {
                 TeaException error = new TeaException(e.getMessage(), e);
-                log.error("ORC advancedText ClientException ErrCode:[{}], ErrMsg:[{}]", error.getCode(), error.getMessage());
+                log.error("ORC recognizeAdvanced ClientException ErrCode:[{}], ErrMsg:[{}]", error.getCode(), error.getMessage());
             }
             return StringUtils.EMPTY;
         }
@@ -104,24 +106,37 @@ public final class OcrUtils {
          * 通用手写体识别
          * url:https://next.api.aliyun.com/api/ocr-api/2021-07-07/RecognizeHandwriting?sdkStyle=dara
          *
-         * @param ocrClient Client:OCR客户端
-         * @param request   RecognizeHandwritingRequest:参数
+         * @param ocrClient  Client:OCR客户端
+         * @param orcRequest RecognizeHandwritingRequest:参数
          */
-        public static RecognizeHandwritingResponse recognizeHandwriting(ORCClient ocrClient, RecognizeHandwritingRequest request) {
-            RuntimeOptions runtime = new RuntimeOptions();
-            RecognizeHandwritingResponse response = null;
+        public static String recognizeHandwriting(ORCClient ocrClient, ORCRecognizeHandwritingRequest orcRequest) {
+            final RecognizeHandwritingRequest request = new RecognizeHandwritingRequest();
+            orcRequest.setNeedRotate(orcRequest.isNeedRotate());
+            orcRequest.setNeedSortPage(orcRequest.isNeedSortPage());
+            orcRequest.setOutputCharInfo(orcRequest.isOutputCharInfo());
+            orcRequest.setOutputTable(orcRequest.isOutputTable());
+            if (StringUtils.isNotBlank(orcRequest.getUrl())) {
+                request.setUrl(orcRequest.getUrl());
+            }
+            if (orcRequest.getBody() != null) {
+                request.setBody(orcRequest.getBody());
+            }
+
             try {
                 // 复制代码运行请自行打印 API 的返回值
-                response = ocrClient.recognizeHandwritingWithOptions(request, runtime);
-            } catch (TeaException error) {
+                RecognizeHandwritingResponse response = ocrClient.recognizeHandwritingWithOptions(request, new RuntimeOptions());
+                log.debug("ORC recognizeHandwriting Response Data: [{}]", JSONUtil.toJsonStr(response));
+                if ("200".equals(response.body.code)) {
+                    return response.body.data;
+                }
+            } catch (TeaException e) {
                 // 如有需要，请打印 error
-                com.aliyun.teautil.Common.assertAsString(error.message);
-            } catch (Exception _error) {
-                TeaException error = new TeaException(_error.getMessage(), _error);
-                // 如有需要，请打印 error
-                com.aliyun.teautil.Common.assertAsString(error.message);
+                log.error("ORC recognizeHandwriting ClientException ErrCode:[{}], ErrMsg:[{}]", e.getCode(), e.getMessage());
+            } catch (Exception e) {
+                TeaException error = new TeaException(e.getMessage(), e);
+                log.error("ORC recognizeHandwriting ClientException ErrCode:[{}], ErrMsg:[{}]", error.getCode(), error.getMessage());
             }
-            return response;
+            return StringUtils.EMPTY;
         }
     }
 
