@@ -1,6 +1,7 @@
 package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.ORCClient;
+import cn.happyloves.ali.tools.model.request.ORCRecognizeAdvancedRequest;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -8,6 +9,7 @@ import com.aliyun.ocr_api20210707.models.*;
 import com.aliyun.tea.TeaException;
 import com.aliyun.teautil.models.RuntimeOptions;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,25 +64,40 @@ public final class OcrUtils {
     public static class Text {
         /**
          * 全文识别高精版
-         * url:https://next.api.aliyun.com/api/ocr-api/2021-07-07/RecognizeAdvanced?sdkStyle=dara&params={%22OutputCharInfo%22:false}
+         * url:https://next.api.aliyun.com/api/ocr-api/2021-07-07/RecognizeAdvanced?spm=api-workbench.API%20Document.0.0.112b4dc3iXL46R&sdkStyle=dara&tab=DOC&lang=JAVA
          *
          * @param ocrClient Client:OCR客户端
          * @param request   RecognizeAdvancedRequest:参数
          */
-        public static RecognizeAdvancedResponse advancedText(ORCClient ocrClient, RecognizeAdvancedRequest request) {
-            RuntimeOptions runtime = new RuntimeOptions();
-            RecognizeAdvancedResponse response = null;
-            try {
-                response = ocrClient.recognizeAdvancedWithOptions(request, runtime);
-            } catch (TeaException teaException) {
-                // 如有需要，请打印 error
-                com.aliyun.teautil.Common.assertAsString(teaException.message);
-            } catch (Exception exception) {
-                TeaException error = new TeaException(exception.getMessage(), exception);
-                // 如有需要，请打印 error
-                com.aliyun.teautil.Common.assertAsString(error.message);
+        public static String advancedText(ORCClient ocrClient, ORCRecognizeAdvancedRequest request) {
+            final RecognizeAdvancedRequest orcRequest = new RecognizeAdvancedRequest();
+            orcRequest.setNeedRotate(request.isNeedRotate());
+            orcRequest.setNeedSortPage(request.isNeedSortPage());
+            orcRequest.setNoStamp(request.isNoStamp());
+            orcRequest.setOutputCharInfo(request.isOutputCharInfo());
+            orcRequest.setOutputFigure(request.isOutputFigure());
+            orcRequest.setOutputTable(request.isOutputTable());
+            orcRequest.setParagraph(request.isParagraph());
+            orcRequest.setRow(request.isRow());
+            if (StringUtils.isNotBlank(request.getUrl())) {
+                orcRequest.setUrl(request.getUrl());
             }
-            return response;
+            if (request.getBody() != null) {
+                orcRequest.setBody(request.getBody());
+            }
+            try {
+                RecognizeAdvancedResponse response = ocrClient.recognizeAdvancedWithOptions(orcRequest, new RuntimeOptions());
+                if ("200".equals(response.body.code)) {
+                    return response.body.data;
+                }
+            } catch (TeaException e) {
+                // 如有需要，请打印 error
+                log.error("ORC advancedText ClientException ErrCode:[{}], ErrMsg:[{}]", e.getCode(), e.getMessage());
+            } catch (Exception e) {
+                TeaException error = new TeaException(e.getMessage(), e);
+                log.error("ORC advancedText ClientException ErrCode:[{}], ErrMsg:[{}]", error.getCode(), error.getMessage());
+            }
+            return StringUtils.EMPTY;
         }
 
         /**
