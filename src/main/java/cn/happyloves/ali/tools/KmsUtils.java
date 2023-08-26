@@ -1,6 +1,7 @@
 package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.KMSClient;
+import cn.happyloves.ali.tools.model.request.KMSDecryptRequest;
 import com.aliyun.dkms.gcs.sdk.models.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,9 +39,9 @@ public final class KmsUtils {
      * @return 加密返回值
      * @throws Exception 异常信息
      */
-    public static DecryptResponse decrypt(KMSClient client, DecryptRequest request) throws Exception {
+    public static DecryptResponse decrypt(KMSClient client, KMSDecryptRequest request) throws Exception {
 
-        DecryptResponse response = client.decrypt(request);
+        DecryptResponse response = client.decrypt(request.getRequest());
         //原始数据。
         byte[] originData = response.getPlaintext();
         //请求ID。

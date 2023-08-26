@@ -1,5 +1,6 @@
 package cn.happyloves.ali.tools.model.request;
 
+import com.aliyun.dkms.gcs.sdk.models.DecryptRequest;
 import lombok.Data;
 
 /**
@@ -14,4 +15,15 @@ public class KMSDecryptRequest {
     public byte[] aad;
     public byte[] iv;
     public String paddingMode;
+
+    public DecryptRequest getRequest() {
+        final DecryptRequest request = new DecryptRequest();
+        request.setCiphertextBlob(this.ciphertextBlob);
+        request.setKeyId(keyId);
+        request.setAlgorithm(algorithm);
+        request.setAad(aad);
+        request.setIv(iv);
+        request.setPaddingMode(paddingMode);
+        return request;
+    }
 }
