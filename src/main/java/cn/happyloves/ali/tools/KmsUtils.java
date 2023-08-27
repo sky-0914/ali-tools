@@ -2,6 +2,7 @@ package cn.happyloves.ali.tools;
 
 import cn.happyloves.ali.tools.bean.KMSClient;
 import cn.happyloves.ali.tools.model.request.KMSDecryptRequest;
+import cn.happyloves.ali.tools.model.request.KMSEncryptRequest;
 import com.aliyun.dkms.gcs.sdk.models.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,8 +21,8 @@ public final class KmsUtils {
      * @return 加密返回值
      * @throws Exception 异常信息
      */
-    public static EncryptResponse encrypt(KMSClient client, EncryptRequest request) throws Exception {
-        EncryptResponse response = client.encrypt(request);
+    public static EncryptResponse encrypt(KMSClient client, KMSEncryptRequest request) throws Exception {
+        EncryptResponse response = client.encrypt(request.getRequest());
 //        //加密数据。
 //        byte[] cipherData = response.getCiphertextBlob();
 //        //Cipher初始向量，用于解密数据。
