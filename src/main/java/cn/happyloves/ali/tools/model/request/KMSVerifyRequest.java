@@ -1,5 +1,6 @@
 package cn.happyloves.ali.tools.model.request;
 
+import com.aliyun.dkms.gcs.sdk.models.VerifyRequest;
 import lombok.Data;
 
 /**
@@ -13,4 +14,14 @@ public class KMSVerifyRequest {
     public String algorithm;
     public byte[] message;
     public String messageType;
+
+    public VerifyRequest getRequest() {
+        final VerifyRequest request = new VerifyRequest();
+        request.setKeyId(keyId);
+        request.setSignature(signature);
+        request.setAlgorithm(algorithm);
+        request.setMessage(message);
+        request.setMessageType(messageType);
+        return request;
+    }
 }

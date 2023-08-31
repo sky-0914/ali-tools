@@ -3,7 +3,12 @@ package cn.happyloves.ali.tools;
 import cn.happyloves.ali.tools.bean.KMSClient;
 import cn.happyloves.ali.tools.model.request.KMSDecryptRequest;
 import cn.happyloves.ali.tools.model.request.KMSEncryptRequest;
-import com.aliyun.dkms.gcs.sdk.models.*;
+import cn.happyloves.ali.tools.model.request.KMSSignRequest;
+import cn.happyloves.ali.tools.model.request.KMSVerifyRequest;
+import com.aliyun.dkms.gcs.sdk.models.DecryptResponse;
+import com.aliyun.dkms.gcs.sdk.models.EncryptResponse;
+import com.aliyun.dkms.gcs.sdk.models.SignResponse;
+import com.aliyun.dkms.gcs.sdk.models.VerifyResponse;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -58,17 +63,8 @@ public final class KmsUtils {
      * @return 加密返回值
      * @throws Exception 异常信息
      */
-    public static SignResponse sign(KMSClient client, SignRequest request) throws Exception {
-        //密钥的ID或别名（Alias）。
-        String signerKeyId = "<the signer key id>";
-        //待签名数据。
-        byte[] message = null;
-
-        SignRequest signRequest = new SignRequest();
-        signRequest.setKeyId(signerKeyId);
-        signRequest.setMessage(message);
-
-        SignResponse response = client.sign(signRequest);
+    public static SignResponse sign(KMSClient client, KMSSignRequest request) throws Exception {
+        SignResponse response = client.sign(request.getRequest());
         //签名值。
         byte[] signature = response.getSignature();
         //请求ID。
@@ -84,18 +80,9 @@ public final class KmsUtils {
      * @return 加密返回值
      * @throws Exception 异常信息
      */
-    public static VerifyResponse verify(KMSClient client, VerifyRequest request) throws Exception {
-        //密钥的ID或别名（Alias）。
-        String signerKeyId = "<the signer key id>";
-        //待验证签名的数据。
-        byte[] message = null;
+    public static VerifyResponse verify(KMSClient client, KMSVerifyRequest request) throws Exception {
 
-        VerifyRequest verifyRequest = new VerifyRequest();
-        verifyRequest.setKeyId(signerKeyId);
-        verifyRequest.setMessage(message);
-        verifyRequest.setSignature(new byte[]{});
-
-        VerifyResponse response = client.verify(verifyRequest);
+        VerifyResponse response = client.verify(request.getRequest());
         //验签结果。
         boolean valid = response.getValue();
         //请求ID。
