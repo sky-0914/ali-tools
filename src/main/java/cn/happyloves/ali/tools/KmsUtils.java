@@ -21,7 +21,7 @@ public final class KmsUtils {
     /**
      * 加密
      *
-     * @param client  kms哭护短
+     * @param client  kms客户端
      * @param request 请求参数
      * @return 加密返回值
      * @throws Exception 异常信息
@@ -40,7 +40,7 @@ public final class KmsUtils {
     /**
      * 解密
      *
-     * @param client  kms哭护短
+     * @param client  kms客户端
      * @param request 请求参数
      * @return 加密返回值
      * @throws Exception 异常信息
@@ -58,7 +58,7 @@ public final class KmsUtils {
     /**
      * 加签
      *
-     * @param client  kms哭护短
+     * @param client  kms客户端
      * @param request 请求参数
      * @return 加密返回值
      * @throws Exception 异常信息
@@ -75,7 +75,7 @@ public final class KmsUtils {
     /**
      * 验签
      *
-     * @param client  kms哭护短
+     * @param client  kms客户端
      * @param request 请求参数
      * @return 加密返回值
      * @throws Exception 异常信息
